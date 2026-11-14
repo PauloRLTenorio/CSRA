@@ -14,6 +14,8 @@ export const STORIES = [
     theme: { a: '#fff0c2', b: '#bfe4c6', ink: '#17382a', accent: '#2b6b4f', dark: false },
     recap: 'O ideal do livro é uma mesa de alimentos simples e naturais, da sua própria terra — alcançada passo a passo.',
     book: 'Cap. 4, “O regime original” (pp. 74–75) e Cap. 18, “Frutas, cereais e verduras” (pp. 264–279)',
+    ponte: 'O cardápio original ficou lá no começo. Agora, a pergunta: por que cuidar do corpo importa tanto?',
+    pagina: 74,
     cards: [
       say('Antes de qualquer receita, existiu um cardápio.', 'O primeiro foi escolhido pelo próprio Criador, para um casal, num jardim.', { items: ['tree'], layout: 'one', anim: 'sway' }, 'Cap. 4, § 111'),
       say('Frutas. Grãos. Nozes. Verduras.', 'O livro chama esse quarteto de o regime escolhido pelo Criador: alimentos preparados do jeito mais simples e natural possível.', { items: ['apple', 'wheat', 'nut', 'leaf'], layout: 'four', anim: 'float' }, 'Cap. 4, § 111'),
@@ -33,6 +35,8 @@ export const STORIES = [
     theme: { a: '#ffe6c2', b: '#f7c58b', ink: '#3a2410', accent: '#b4532b', dark: false },
     recap: 'Cuidar do corpo é uma forma de gratidão — e recomeçar é sempre possível, sem culpa.',
     book: 'Cap. 1, “Razões para reforma” (pp. 16–40) e Cap. 2, “Regime e espiritualidade” (pp. 42–64)',
+    ponte: 'Cuidar do corpo ajuda a pensar? O livro diz que sim, e mostra como a mesa conversa com a mente.',
+    pagina: 44,
     cards: [
       say('A sua vida é um empréstimo.', 'É assim que o livro começa: se a vida foi emprestada, a pergunta é como investi-la bem em favor de Deus e das pessoas.', { items: ['heart'], layout: 'one', anim: 'pulse' }, 'Cap. 1, § 1', { q: 'A vida é-nos concedida apenas como um empréstimo' }),
       say('O corpo não é só seu.', 'Para o livro, o corpo foi criado e também resgatado por um preço alto. Cuidar dele é cuidar de algo que foi confiado a você.', { items: ['house', 'heart'], layout: 'two', anim: 'float' }, 'Cap. 1, § 10'),
@@ -51,6 +55,8 @@ export const STORIES = [
     theme: { a: '#d6eef7', b: '#fff4dc', ink: '#17323f', accent: '#2a7aa0', dark: false },
     recap: 'Uma refeição simples ajuda a pensar, decidir e ouvir melhor.',
     book: 'Cap. 2, “Efeitos mentais da desobediência a leis físicas” (pp. 44–52) e Cap. 5 (pp. 91–104)',
+    ponte: 'Se a mesa pesa na mente, qual é a saída? Mais simples do que parece.',
+    pagina: 75,
     cards: [
       say('O que você come conversa com o que você pensa.', 'O livro vê o estômago e o cérebro como vizinhos de parede: o que acontece de um lado se sente do outro.', { items: ['bulb', 'plate'], layout: 'two', anim: 'float' }, 'Cap. 5, § 175'),
       widget('nuvem', 'Nuvem sobre a mente', 'Arraste e veja o que uma refeição pesada faz com o dia.'),
@@ -70,6 +76,8 @@ export const STORIES = [
     theme: { a: '#e1efd2', b: '#fff6de', ink: '#26391c', accent: '#4a8a3a', dark: false },
     recap: 'Menos pratos por refeição, mais variedade entre uma refeição e outra — e casa aberta sem banquete.',
     book: 'Cap. 4, “O regime simples” (pp. 75–84) e Cap. 5, “Combinação de alimentos” (pp. 100–104)',
+    ponte: 'Pouco prato resolve metade. A outra metade é quando se come: vamos ao ritmo do dia.',
+    pagina: 153,
     cards: [
       say('Mais pratos, mais problemas?', 'O livro desconfia da mesa carregada demais: variedade excessiva numa só refeição cansa o corpo e tira o prazer de cada alimento.', { items: ['plate', 'bowl', 'bread'], layout: 'three', anim: 'bounce' }, 'Cap. 5, §§ 177–187'),
       widget('refeicao', 'Monte a refeição', 'Toque nos pratos para colocá-los na mesa. Quantos cabem em paz?'),
@@ -88,6 +96,8 @@ export const STORIES = [
     theme: { a: '#ffd9b5', b: '#f6a57f', ink: '#40200f', accent: '#b4532b', dark: false },
     recap: 'Horários regulares, intervalo entre as refeições e jantar leve — sem transformar isso em teste para ninguém.',
     book: 'Cap. 9, “Regularidade no comer” (pp. 153–162) e Cap. 5, “Comer devagar e mastigar bem” (pp. 97–99)',
+    ponte: 'Horário é fácil no papel. O difícil é a vontade fora de hora. Vamos falar dela.',
+    pagina: 128,
     cards: [
       say('Seu estômago também precisa de descanso.', 'Em vez de trabalhar sem parar, o livro propõe dar a ele um tempo para terminar uma tarefa antes de começar outra.', { items: ['clock'], layout: 'one', anim: 'sway' }, 'Cap. 9, § 267', { q: 'alguma paz, sossego e descanso' }),
       widget('relogio', 'Relógio do dia', 'Arraste as refeições e veja o intervalo entre elas. Toque na linha para “beliscar”.'),
@@ -107,6 +117,8 @@ export const STORIES = [
     theme: { a: '#2b5a48', b: '#1b3c31', ink: '#fff1d4', accent: '#f4b73f', dark: true },
     recap: 'Domínio próprio começa no coração, cabe em pequenas pausas e conta com ajuda maior que a nossa.',
     book: 'Cap. 8, “Controle do apetite” (pp. 128–152) e Cap. 1, “O exemplo de Daniel” (pp. 29–33)',
+    ponte: 'Mudar o prato só dura quando ele é gostoso. Hora de ir para a cozinha.',
+    pagina: 216,
     cards: [
       say('Nem toda vontade é fome.', 'O livro observa que, às vezes, a “fome” é só um desejo da mente que ainda não aprendeu a esperar.', { items: ['plate'], layout: 'one', anim: 'pulse' }, 'Cap. 9, § 275'),
       widget('pausa', 'Pausa de 10 segundos', 'Antes de comer: pare, agradeça, escolha.'),
@@ -125,6 +137,8 @@ export const STORIES = [
     theme: { a: '#ffd7b0', b: '#f2a56c', ink: '#3f1e0b', accent: '#b4532b', dark: false },
     recap: 'Comida saudável só pega quando é saborosa. Aprender a cozinhar é parte da mudança.',
     book: 'Cap. 14, “Arte de cozinhar saudável” (pp. 216–229)',
+    ponte: 'A cozinha de casa ensina muito. E quem aprende primeiro com ela? As crianças.',
+    pagina: 194,
     cards: [
       say('Quem cozinha, cuida.', 'O livro tem um carinho raro pela cozinheira: quem prepara bem a comida sustenta o corpo, o cérebro e o humor da casa inteira.', { items: ['pot'], layout: 'one', anim: 'sway' }, 'Cap. 14, § 369'),
       say('Saudável precisa ser gostoso.', 'Se a comida é sem sabor, o corpo aproveita menos e a pessoa desiste. O livro pede alimento escolhido com cuidado e preparado com inteligência e habilidade.', { items: ['bowl', 'lemon'], layout: 'two', anim: 'float' }, 'Cap. 14, § 390'),
@@ -143,6 +157,8 @@ export const STORIES = [
     theme: { a: '#ffe9b8', b: '#ffc7c0', ink: '#44231f', accent: '#c0503c', dark: false },
     recap: 'Rotina, exemplo e firmeza amável ensinam mais que sermões.',
     book: 'Cap. 13, “A dieta infantil” (pp. 194–215) e Cap. 12 (pp. 189–193)',
+    ponte: 'Tudo isso pode virar rigidez. O livro avisa: existe um jeito de errar por zelo.',
+    pagina: 170,
     cards: [
       say('A primeira escola de comer é a mesa de casa.', 'O livro dedica capítulos à gestação e à infância: o que se vive à mesa nos primeiros anos molda hábitos para a vida toda.', { items: ['house', 'child'], layout: 'two', anim: 'float' }, 'Caps. 12 e 13'),
       say('Comer para viver, e não viver para comer.', 'É a ideia central do capítulo das crianças: ensinar cedo que a comida sustenta a vida, mas não é o objetivo dela.', { items: ['child', 'plate'], layout: 'two', anim: 'bounce' }, 'Cap. 13, § 346', { q: 'comer para viver, e não viver para comer' }),
@@ -161,6 +177,8 @@ export const STORIES = [
     theme: { a: '#e6e1f7', b: '#fff0dc', ink: '#2a2347', accent: '#6a4bb5', dark: false },
     recap: 'Nutritivo e saboroso, adequado a cada corpo, passo a passo e sem impor nada a ninguém.',
     book: 'Cap. 11, “Extremos no regime alimentar” (pp. 170–188) e Apêndice 1 (pp. 413–426)',
+    ponte: 'Com equilíbrio, sobram os remédios mais simples e mais antigos que a natureza oferece.',
+    pagina: 258,
     cards: [
       say('Existe um jeito de errar por zelo.', 'O livro avisa que a reforma de saúde pode virar o contrário do que pretende quando é levada ao extremo.', { items: ['scale'], layout: 'one', anim: 'sway' }, 'Cap. 11, § 324', { q: 'reforma de saúde torna-se a deformação da saúde' }),
       widget('balanca', 'A balança do equilíbrio', 'Arraste entre os dois extremos e procure o meio.'),
@@ -180,6 +198,8 @@ export const STORIES = [
     theme: { a: '#c9efea', b: '#e6f6d4', ink: '#123b3a', accent: '#2a8a8a', dark: false },
     recap: 'Hábitos simples somam mais do que parece — e não dispensam o médico.',
     book: 'Cap. 17, “A dietética como remédio racional” (pp. 258–263) e Cap. 24, “Beber água” (pp. 360–361)',
+    ponte: 'Cuidar de si prepara para cuidar dos outros. Como convidar sem pressionar?',
+    pagina: 65,
     cards: [
       say('Oito remédios que não vêm em caixa.', 'O livro lista os “remédios” simples da natureza: ar puro, luz solar, abstinência do que faz mal, repouso, exercício, alimentação adequada, água e confiança em Deus.', { items: ['wind', 'sun', 'drop', 'moon'], layout: 'four', anim: 'float' }, 'Cap. 17, § 452', { q: 'Ar puro, luz solar, abstinência, repouso, exercício' }),
       widget('remedios', 'A roda dos oito remédios', 'Toque em cada um para ver o que o livro diz.'),
@@ -199,6 +219,7 @@ export const STORIES = [
     theme: { a: '#ffe3a6', b: '#f7b267', ink: '#3a2205', accent: '#b4532b', dark: false },
     recap: 'Convide pelo exemplo, ensine com paciência e mantenha a saúde no seu lugar: um caminho, não o destino.',
     book: 'Cap. 3 (pp. 65–73) e Cap. 25, “Ensinando princípios saudáveis” (pp. 378–412)',
+    ponte: 'Falta o passo prático: o que fazer a partir de amanhã?',
     cards: [
       say('Por que um livro de comida fala de missão?', 'Porque, para a autora, cuidar da saúde cria pontes: derruba preconceitos e abre portas para conversas que importam.', { items: ['house', 'hands'], layout: 'two', anim: 'float' }, 'Cap. 3, §§ 108–109'),
       say('Do jeito de Jesus.', 'O método que o livro destaca: conviver, simpatizar, atender às necessidades, ganhar a confiança — e só então convidar.', { items: ['hands', 'heart'], layout: 'two', anim: 'pulse' }, 'Cap. 25, § 791', { q: 'misturava-Se com os homens como uma pessoa que lhes desejava o bem' }),
@@ -235,6 +256,7 @@ export const RESUMO = {
   theme: { a: '#cdebe8', b: '#ffe1ae', ink: '#17382a', accent: '#2b6b4f', dark: false },
   recap: 'Mesa simples, no horário, com gratidão e equilíbrio: um cuidado que começa por dentro.',
   book: 'O livro inteiro (25 capítulos e dois apêndices). Cada uma das doze paradas indica os capítulos certos',
+  ponte: 'Gostou? A jornada completa aprofunda cada uma dessas ideias.',
   cards: [
     say('Tudo começou com um cardápio.', 'Frutas, grãos, nozes e verduras: o primeiro cardápio, escolhido pelo próprio Criador.', { items: ['apple', 'wheat', 'nut', 'leaf'], layout: 'four', anim: 'float' }, 'Cap. 4, § 111'),
     say('A vida é um empréstimo.', 'Cuidar do corpo é uma forma de gratidão — não de obsessão.', { items: ['heart'], layout: 'one', anim: 'pulse' }, 'Cap. 1, § 1'),

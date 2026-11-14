@@ -41,7 +41,8 @@ export function backdropHTML(name) {
         <circle class="bd-sun" cx="16" cy="18" r="16" fill="url(#g-glow)"/>
         <path d="M-5 76C15 64 38 64 58 73S92 80 105 68V105H-5z" fill="url(#g-hill-1)"/>
         <path d="M-5 88C22 78 52 82 74 86S96 88 105 82V105H-5z" fill="url(#g-hill-2)"/>
-        <path d="M-5 98C25 92 60 96 105 94V105H-5z" fill="url(#g-hill-3)"/></svg></div>`;
+        <path d="M-5 98C25 92 60 96 105 94V105H-5z" fill="url(#g-hill-3)"/></svg>
+        ${[[12, 7, 22, 0], [34, 9, 28, 6], [58, 6, 25, 11], [78, 8, 30, 3], [92, 7, 26, 9]].map(([x, z, t, d], i) => `<i class="bd-leaf" style="--x:${x}%;--s:${z};--t:${t}s;--d:-${d}s;--dx:${i % 2 ? 40 : -40}"></i>`).join('')}</div>`;
     case 'sky':
       return `<div class="bd bd--sky" aria-hidden="true">
         <i class="bd-cloud" style="--y:10%;--s:34;--t:58s;--o:.0s"><svg viewBox="0 0 100 100"><use href="#s-cloud"/></svg></i>
@@ -50,11 +51,12 @@ export function backdropHTML(name) {
     case 'glow':
       return '<div class="bd bd--glow" aria-hidden="true"><i></i><i></i></div>';
     case 'night':
-      return `<div class="bd bd--night" aria-hidden="true">${STARS.map(([x, y, s], i) => `<i class="bd-star" style="left:${x}%;top:${y}%;--s:${s};--d:${(i * 0.37).toFixed(2)}s"></i>`).join('')}</div>`;
+      return `<div class="bd bd--night" aria-hidden="true">${STARS.map(([x, y, s], i) => `<i class="bd-star" style="left:${x}%;top:${y}%;--s:${s};--d:${(i * 0.37).toFixed(2)}s"></i>`).join('')}${[[22, 58, 9], [64, 70, 12], [80, 46, 7], [40, 80, 14]].map(([x, y, t], i) => `<i class="bd-fly" style="--x:${x}%;--y:${y}%;--t:${t}s;--d:-${i * 2.3}s"></i>`).join('')}</div>`;
     case 'water':
       return `<div class="bd bd--water" aria-hidden="true"><svg viewBox="0 0 200 60" preserveAspectRatio="none">
         <path class="w1" d="M0 30c25-14 50-14 75 0s50 14 75 0 50-14 75 0V60H0z"/>
-        <path class="w2" d="M0 38c25-12 50-12 75 0s50 12 75 0 50-12 75 0V60H0z"/></svg></div>`;
+        <path class="w2" d="M0 38c25-12 50-12 75 0s50 12 75 0 50-12 75 0V60H0z"/></svg>
+        ${[[14, 9, 9], [38, 6, 12], [61, 11, 8], [83, 7, 11]].map(([x, z, t], i) => `<i class="bd-bub" style="--x:${x}%;--s:${z};--t:${t}s;--d:-${i * 2.1}s"></i>`).join('')}</div>`;
     default:
       return '<div class="bd bd--plain" aria-hidden="true"><i></i><i></i></div>';
   }

@@ -5,6 +5,7 @@ import { stageHTML, icon } from './art.js';
 import { img } from '../data/imagens.js';
 import { mountWidget } from './widgets/index.js';
 
+const PDF = 'https://media4.egwwritings.org/pdf/pt_CRA%28CD%29.pdf';
 const $ = (s, r = document) => r.querySelector(s);
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -126,8 +127,9 @@ export class Viewer {
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
 
-  next() { if (this.idx < this.total - 1) this.go(this.idx + 1, 1); }
-  prev() { if (this.idx > 0) this.go(this.idx - 1, -1); }
+  next() { if (this.idx < this.total - 1) { this.go(this.idx + 1, 1); this._tick(); } }
+  prev() { if (this.idx > 0) { this.go(this.idx - 1, -1); this._tick(); } }
+  _tick() { try { navigator.vibrate && navigator.vibrate(6); } catch (e) { /* sem vibração */ } }
 
   go(i, dir = 0, first = false) {
     if (this.cleanup) { try { this.cleanup(); } catch (e) { /* ignora */ } this.cleanup = null; }
@@ -198,13 +200,17 @@ export class Viewer {
   _endHTML() {
     const s = this.story;
     const nxt = STORIES[STORIES.findIndex((x) => x.id === s.id) + 1];
-    return `<div class="sv__stage">${stageHTML({ items: [s.icon, 'star', 'leaf'], layout: 'three', anim: 'bounce' }, s.scene, img(`parada-${s.n}`))}</div>
+    const all = s.n > 0 && STORIES.every((x) => x.id === s.id || state.isDone(x.id));
+    const party = all ? `<div class="sv__party" aria-hidden="true">${Array.from({ length: 14 }, (_, i) => { const a = (i / 14) * Math.PI * 2, d = 120 + (i % 3) * 40; return `<i style="--bx:${(Math.cos(a) * d).toFixed(0)}%;--by:${(Math.sin(a) * d).toFixed(0)}%;animation-delay:${i * 40}ms"><svg viewBox="0 0 100 100"><use href="#s-${i % 3 === 0 ? 'star' : i % 3 === 1 ? 'apple' : 'leaf'}"/></svg></i>`; }).join('')}</div>` : '';
+    return `<div class="sv__stage">${stageHTML({ items: [s.icon, 'star', 'leaf'], layout: 'three', anim: 'bounce' }, s.scene, img(`parada-${s.n}`))}${party}</div>
       <div class="sv__text sv__end">
-        <h2 class="sv__big">Parada concluída.</h2>
+        <h2 class="sv__big">${all ? 'Jornada completa!' : 'Parada concluída.'}</h2>
         <p class="sv__take"><b>Leve isto</b>${esc(s.recap)}</p>
-        <p class="sv__read"><b>Para ler no livro:</b> ${esc(s.book)}.</p>
+        ${s.ponte ? `<p class="sv__ponte">${esc(s.ponte)}</p>` : ''}
+        <p class="sv__read"><b>Para ler no livro:</b> ${esc(s.book)}.${s.pagina ? ` <a href="${PDF}#page=${s.pagina + 4}" target="_blank" rel="noopener">Abrir no PDF (p. ${s.pagina})</a>` : ''}</p>
         <div class="sv__actions">
           ${nxt ? `<button class="sv__btn sv__btn--pri" type="button" data-act="next">Próxima: ${esc(nxt.title)}</button>` : `<button class="sv__btn sv__btn--pri" type="button" data-act="home">Voltar ao início</button>`}
+          <button class="sv__btn sv__btn--ghost" type="button" data-act="share">Compartilhar</button>
           <button class="sv__btn sv__btn--ghost" type="button" data-act="again">Rever</button>
           <button class="sv__btn sv__btn--ghost" type="button" data-act="path">A jornada</button>
         </div>
@@ -218,9 +224,19 @@ export class Viewer {
       const b = e.target.closest('[data-act]'); if (!b) return;
       const act = b.dataset.act;
       if (act === 'next' && nxt) this.hooks.onOpenStory && this.hooks.onOpenStory(nxt.id);
+      else if (act === 'share') this._share();
       else if (act === 'again') this.go(0, -1);
       else if (act === 'path' || act === 'home') this.close(act === 'path' ? '#jornada' : '#topo');
     });
+  }
+
+  async _share() {
+    const s = this.story;
+    const data = { title: `CSRA — ${s.title}`, text: s.hook, url: `https://paulorltenorio.github.io/CSRA/#/h/${s.id}` };
+    try {
+      if (navigator.share) await navigator.share(data);
+      else { await navigator.clipboard.writeText(data.url); this.hooks.toast && this.hooks.toast('Link da parada copiado!'); }
+    } catch (e) { /* cancelado */ }
   }
 
   close(scrollTo) {
