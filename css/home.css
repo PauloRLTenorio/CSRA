@@ -5,6 +5,7 @@
   position: fixed; inset: 0 0 auto 0; height: var(--header-h); z-index: 60;
   display: flex; align-items: center; gap: 14px; padding: 0 var(--gutter);
   padding-top: env(safe-area-inset-top);
+  background: var(--paper);
   background: color-mix(in srgb, var(--paper) 78%, transparent);
   -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px);
   border-bottom: 1px solid transparent; transition: border-color .3s, background .3s;

@@ -71,9 +71,10 @@ Para ler no livro: Cap. 4, “O regime simples” (pp. 75–84) e Cap. 5, “Com
 | 2 | 🎮 Monte a refeição | — |  |
 | 3 | Varie entre as refeições, não dentro delas. | Cap. 5, § 177 |  |
 | 4 | O paladar aprende. | Cap. 4, § 120 | “Levará tempo até que o gosto se torne natural” |
-| 5 | Hospitalidade não precisa de banquete. | Cap. 4, §§ 127–133 |  |
-| 6 | O que sobra, serve. | Cap. 4, § 134; Cap. 14, § 386 |  |
-| 7 | 🎮 Uma pergunta para levar | — |  |
+| 5 | A melhor sobremesa cresce na árvore. | Cap. 19, §§ 531 e 544 |  |
+| 6 | Hospitalidade não precisa de banquete. | Cap. 4, §§ 127–133 |  |
+| 7 | O que sobra, serve. | Cap. 4, § 134; Cap. 14, § 386 |  |
+| 8 | 🎮 Uma pergunta para levar | — |  |
 
 ## Parada 5 — O ritmo do dia
 
@@ -100,9 +101,10 @@ Para ler no livro: Cap. 8, “Controle do apetite” (pp. 128–152) e Cap. 1, �
 | 2 | 🎮 Pausa de 10 segundos | — |  |
 | 3 | A primeira batalha foi no prato. | Cap. 8, §§ 237–240 |  |
 | 4 | Daniel pediu dez dias. | Cap. 1, § 34 |  |
-| 5 | Primeiro o coração. | Cap. 1, § 39 | “Nenhuma mera restrição de vossa dieta curará vosso apetite doentio.” |
-| 6 | Você não precisa vencer sozinho. | Cap. 8, §§ 265–266 |  |
-| 7 | 🎮 Uma pergunta para levar | — |  |
+| 5 | O jejum que o livro mais valoriza. | Cap. 10, §§ 305–308 |  |
+| 6 | Primeiro o coração. | Cap. 1, § 39 | “Nenhuma mera restrição de vossa dieta curará vosso apetite doentio.” |
+| 7 | Você não precisa vencer sozinho. | Cap. 8, §§ 265–266 |  |
+| 8 | 🎮 Uma pergunta para levar | — |  |
 
 ## Parada 7 — A cozinha que cura
 
@@ -114,9 +116,10 @@ Para ler no livro: Cap. 14, “Arte de cozinhar saudável” (pp. 216–229).
 | 2 | Saudável precisa ser gostoso. | Cap. 14, § 390 |  |
 | 3 | Não é a mudança que falha. É a panela. | Cap. 14, §§ 374 e 379 | “reforma de saúde é tornada deforma-saúde” |
 | 4 | Cozinhar é uma arte essencial. | Cap. 14, § 393 | “A ciência culinária, porém, não é de pequena importância.” |
-| 5 | Aprenda — homens também. | Cap. 14, § 374 | “Aprendam a cozinhar.” |
-| 6 | 🎮 Plante algo | — |  |
-| 7 | 🎮 Uma pergunta para levar | — |  |
+| 5 | O pão é o bordão da vida. | Cap. 18, §§ 493–495 | “O pão é o verdadeiro bordão da vida” |
+| 6 | Aprenda — homens também. | Cap. 14, § 374 | “Aprendam a cozinhar.” |
+| 7 | 🎮 Plante algo | — |  |
+| 8 | 🎮 Uma pergunta para levar | — |  |
 
 ## Parada 8 — Pequenos à mesa
 
@@ -143,9 +146,10 @@ Para ler no livro: Cap. 11, “Extremos no regime alimentar” (pp. 170–188) e
 | 3 | Dieta pobre não é virtude. | Cap. 4, § 135 | “Ninguém deve adotar um regime paupérrimo.” |
 | 4 | Cada corpo é um corpo. | Apêndice 1, § 26 | “O que seria alimento para um, seria veneno para outro” |
 | 5 | Não faça da mesa um teste. | Cap. 25, § 800 | “Não fustigueis o povo. Guiai-o.” |
-| 6 | Ela mesma não vigiava os outros. | Apêndice 1, § 25 | “Não me faço critério para nenhuma outra pessoa.” |
-| 7 | Moderação à vista de todos. | Cap. 21, § 592 | “Seja a vossa moderação conhecida a todos os homens.” |
-| 8 | 🎮 Uma pergunta para levar | — |  |
+| 6 | Passo a passo, sem fome. | Cap. 25, §§ 805 e 807 | “nunca deveríamos advogar um regime que nos faça padecer fome” |
+| 7 | Ela mesma não vigiava os outros. | Apêndice 1, § 25 | “Não me faço critério para nenhuma outra pessoa.” |
+| 8 | Moderação à vista de todos. | Cap. 21, § 592 | “Seja a vossa moderação conhecida a todos os homens.” |
+| 9 | 🎮 Uma pergunta para levar | — |  |
 
 ## Parada 10 — Remédios simples
 
@@ -172,9 +176,10 @@ Para ler no livro: Cap. 3 (pp. 65–73) e Cap. 25, “Ensinando princípios saud
 | 2 | Do jeito de Jesus. | Cap. 25, § 791 | “misturava-Se com os homens como uma pessoa que lhes desejava o bem” |
 | 3 | 🎮 O que você diria? | — |  |
 | 4 | Primeiro ensinar a cozinhar. | Cap. 25, § 793 | “instruir, instruir, instruir” |
-| 5 | Há tempo de falar e tempo de calar. | Cap. 25, § 796 | “Há tempo para falar, e tempo para calar.” |
-| 6 | Parte da mensagem, não a mensagem toda. | Cap. 3, §§ 103–104 |  |
-| 7 | 🎮 Uma pergunta para levar | — |  |
+| 5 | Aulas de cozinha como ponte. | Cap. 25, §§ 804–805 |  |
+| 6 | Há tempo de falar e tempo de calar. | Cap. 25, § 796 | “Há tempo para falar, e tempo para calar.” |
+| 7 | Parte da mensagem, não a mensagem toda. | Cap. 3, §§ 103–104 |  |
+| 8 | 🎮 Uma pergunta para levar | — |  |
 
 ## Parada 12 — Seu próximo passo
 

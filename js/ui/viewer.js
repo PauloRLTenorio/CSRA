@@ -9,6 +9,12 @@ const PDF = 'https://media4.egwwritings.org/pdf/pt_CRA%28CD%29.pdf';
 const $ = (s, r = document) => r.querySelector(s);
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
+// mistura duas cores #rrggbb (pct = quanto da cor b entra), para não depender de color-mix em navegadores antigos
+const mixHex = (a, b, pct) => {
+  const n = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const [x, y] = [n(a), n(b)];
+  return '#' + x.map((v, i) => Math.round(v * (1 - pct) + y[i] * pct).toString(16).padStart(2, '0')).join('');
+};
 const ICON_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 const ICON_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>';
 const ICON_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
@@ -49,7 +55,7 @@ export class Viewer {
 
   _theme() {
     const t = this.story.theme;
-    const sheet = t.dark ? `color-mix(in srgb, #ffffff 9%, ${t.b})` : `color-mix(in srgb, #ffffff 58%, ${t.b})`;
+    const sheet = t.dark ? mixHex(t.b, '#ffffff', 0.09) : mixHex(t.b, '#ffffff', 0.58);
     const glow = t.dark ? 'rgba(255, 226, 150, 0.13)' : 'rgba(255, 255, 255, 0.62)';
     return `--st-a:${t.a};--st-b:${t.b};--st-ink:${t.ink};--st-accent:${t.accent};--st-sheet:${sheet};--st-glow:${glow}`;
   }
