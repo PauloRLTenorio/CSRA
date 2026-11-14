@@ -1,0 +1,130 @@
+/* ===== Tokens de design do CSRA ===== */
+:root {
+  --font-serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-sans: "Inter", ui-rounded, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* papel e tinta (tema dia) */
+  --paper: #fff8ea;
+  --paper-2: #f8edd5;
+  --paper-3: #eedfbd;
+  --card: #fffdf6;
+  --ink: #1b2a24;
+  --ink-2: #44564d;
+  --ink-3: #6a7a71;
+  --line: rgba(27, 42, 36, 0.14);
+  --line-2: rgba(27, 42, 36, 0.08);
+
+  /* paleta natural */
+  --forest: #1e4d3a;
+  --forest-2: #2b6b4f;
+  --leaf: #3e8a5f;
+  --sage: #8db596;
+  --mint: #d3e8d6;
+  --sun: #f4b73f;
+  --sun-2: #ffd27a;
+  --peach: #f8a77b;
+  --terra: #c9633c;
+  --berry: #8e3b5e;
+  --sky: #cfe9e3;
+  --night: #14231e;
+
+  /* cores dos alimentos (usadas pelas ilustrações) */
+  --c-apple: #d9453b;
+  --c-apple-d: #b4302a;
+  --c-pear: #b9cc4a;
+  --c-pear-d: #8fa634;
+  --c-grape: #6d3f8d;
+  --c-grape-d: #4f2a69;
+  --c-orange: #f28c28;
+  --c-orange-d: #d36c12;
+  --c-lemon: #f5d142;
+  --c-lemon-d: #dcb523;
+  --c-wheat: #e5b350;
+  --c-wheat-d: #c48f2a;
+  --c-bread: #d99a4e;
+  --c-bread-d: #b87630;
+  --c-crust: #a85f26;
+  --c-wood: #8c5b3a;
+  --c-wood-d: #5e3b26;
+  --c-leaf: #4a9a62;
+  --c-leaf-d: #2f7448;
+  --c-water: #7cc4e0;
+  --c-water-d: #4a9bc4;
+  --c-cream: #fff2d2;
+  --c-white: #fffdf7;
+  --c-skin: #f1c9a4;
+  --c-skin-d: #d9a67c;
+  --c-hair: #5a3a26;
+  --c-forest: #1e4d3a;
+  --c-forest-2: #2b6b4f;
+  --c-sky: #cfe9e3;
+
+  /* escala */
+  --gutter: 20px;
+  --r-s: 10px;
+  --r-m: 16px;
+  --r-l: 26px;
+  --r-xl: 38px;
+  --shadow-1: 0 1px 2px rgba(20, 40, 30, 0.08), 0 8px 24px rgba(20, 40, 30, 0.08);
+  --shadow-2: 0 14px 50px rgba(20, 40, 30, 0.2);
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* tipografia fluida */
+  --fs-hero: clamp(2.55rem, 9vw, 5.4rem);
+  --fs-h2: clamp(1.9rem, 5.4vw, 3.1rem);
+  --fs-h3: clamp(1.25rem, 3.2vw, 1.6rem);
+  --fs-lead: clamp(1.1rem, 2.6vw, 1.38rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.9rem;
+  --fs-tiny: 0.78rem;
+
+  --header-h: 56px;
+}
+
+@media (min-width: 720px) {
+  :root {
+    --gutter: 32px;
+    --header-h: 64px;
+  }
+}
+
+/* tema noite: ativado pelo botão ou pelo sistema (se o usuário não escolheu) */
+:root[data-theme="night"] {
+  color-scheme: dark;
+  --paper: #0f1e19;
+  --paper-2: #14281f;
+  --paper-3: #1b3329;
+  --card: #162a22;
+  --ink: #f3ebdb;
+  --ink-2: #cfc7b6;
+  --ink-3: #9aa597;
+  --line: rgba(243, 235, 219, 0.18);
+  --line-2: rgba(243, 235, 219, 0.1);
+  --forest: #8fd0a8;
+  --forest-2: #6fbb8c;
+  --mint: #1f3d31;
+  --sky: #17352f;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 14px 50px rgba(0, 0, 0, 0.55);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="day"]) {
+    color-scheme: dark;
+    --paper: #0f1e19;
+    --paper-2: #14281f;
+    --paper-3: #1b3329;
+    --card: #162a22;
+    --ink: #f3ebdb;
+    --ink-2: #cfc7b6;
+    --ink-3: #9aa597;
+    --line: rgba(243, 235, 219, 0.18);
+    --line-2: rgba(243, 235, 219, 0.1);
+    --forest: #8fd0a8;
+    --forest-2: #6fbb8c;
+    --mint: #1f3d31;
+    --sky: #17352f;
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+    --shadow-2: 0 14px 50px rgba(0, 0, 0, 0.55);
+  }
+}

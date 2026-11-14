@@ -1,0 +1,233 @@
+// Visualizador de histórias: cartões em tela cheia, com toque, deslize e teclado.
+import { STORIES, BY_ID } from '../data/stories.js';
+import { state } from '../state.js';
+import { stageHTML, icon } from './art.js';
+import { mountWidget } from './widgets/index.js';
+
+const $ = (s, r = document) => r.querySelector(s);
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+const ICON_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+const ICON_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>';
+const ICON_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
+const ICON_I = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>';
+
+export class Viewer {
+  constructor(root, hooks = {}) {
+    this.root = root;
+    this.hooks = hooks; // { onClose(), onNavigate(id, idx), onOpenStory(id) }
+    this.story = null;
+    this.idx = 0;
+    this.cleanup = null;
+    this.lastFocus = null;
+    this._key = this._key.bind(this);
+  }
+
+  get isOpen() { return !this.root.hidden; }
+  get id() { return this.story ? this.story.id : null; }
+
+  open(id, idx = 0) {
+    const story = BY_ID[id];
+    if (!story) return;
+    const reopen = this.isOpen;
+    this.story = story;
+    if (!reopen) this.lastFocus = document.activeElement;
+    state.setLast(id);
+    this.root.hidden = false;
+    document.body.classList.add('is-locked');
+    this._build();
+    requestAnimationFrame(() => this.root.classList.add('is-open'));
+    this.go(Math.max(0, Math.min(idx, this.total - 1)), 0, true);
+    document.addEventListener('keydown', this._key);
+    const f = $('.sv__frame', this.root);
+    f && f.focus({ preventScroll: true });
+  }
+
+  get total() { return this.story.cards.length + 1; } // + cartão final
+
+  _theme() {
+    const t = this.story.theme;
+    const sheet = t.dark ? `color-mix(in srgb, #ffffff 9%, ${t.b})` : `color-mix(in srgb, #ffffff 58%, ${t.b})`;
+    const glow = t.dark ? 'rgba(255, 226, 150, 0.13)' : 'rgba(255, 255, 255, 0.62)';
+    return `--st-a:${t.a};--st-b:${t.b};--st-ink:${t.ink};--st-accent:${t.accent};--st-sheet:${sheet};--st-glow:${glow}`;
+  }
+
+  _build() {
+    const s = this.story;
+    this.root.innerHTML = `
+      <div class="sv__frame" role="dialog" aria-modal="true" aria-label="Parada ${s.n}: ${esc(s.title)}" tabindex="-1" data-dark="${s.theme.dark ? 1 : 0}" style="${this._theme()}">
+        <div class="sv__top">
+          <div class="sv__bars" aria-hidden="true">${Array.from({ length: this.total }, () => '<i></i>').join('')}</div>
+          <div class="sv__row">
+            <div class="sv__ttl"><b>${s.n}</b><span>${esc(s.title)}</span></div>
+            <button class="sv__x" type="button" aria-label="Fechar história">${ICON_X}</button>
+          </div>
+        </div>
+        <div class="sv__card" id="svCard"></div>
+        <div class="sv__nav">
+          <button class="sv__prev" type="button" aria-label="Cartão anterior">${ICON_L}</button>
+          <span class="sv__count" aria-hidden="true"></span>
+          <button class="sv__next" type="button"><span>Continuar</span>${ICON_R}</button>
+        </div>
+        <div class="sv__sr" aria-live="polite" id="svLive"></div>
+      </div>`;
+    const frame = $('.sv__frame', this.root);
+    $('.sv__x', frame).addEventListener('click', () => this.close());
+    $('.sv__prev', frame).addEventListener('click', () => this.prev());
+    $('.sv__next', frame).addEventListener('click', () => this.next());
+    this._gestures(frame);
+    this.frame = frame;
+    this.cardEl = $('#svCard', frame);
+  }
+
+  _gestures(frame) {
+    let sx = 0, sy = 0, st = 0, tracking = false, blocked = false;
+    frame.addEventListener('pointerdown', (e) => {
+      tracking = true; sx = e.clientX; sy = e.clientY; st = Date.now();
+      blocked = !!e.target.closest('[data-nonav], button, a, input, select, textarea, label, .sv__text .sv__q');
+    });
+    frame.addEventListener('pointercancel', () => { tracking = false; });
+    frame.addEventListener('pointerup', (e) => {
+      if (!tracking) return; tracking = false;
+      if (blocked) return;
+      const dx = e.clientX - sx, dy = e.clientY - sy, dt = Date.now() - st;
+      if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.5) { dx < 0 ? this.next() : this.prev(); return; }
+      if (Math.abs(dx) < 10 && Math.abs(dy) < 10 && dt < 500) {
+        if (this.cardEl && this.cardEl.dataset.k === 'widget') return;
+        const r = frame.getBoundingClientRect();
+        const rel = (e.clientX - r.left) / r.width;
+        rel < 0.3 ? this.prev() : this.next();
+      }
+    });
+  }
+
+  _key(e) {
+    if (!this.isOpen) return;
+    if (e.key === 'Escape') { e.preventDefault(); this.close(); return; }
+    const t = e.target;
+    const typing = t && t.closest && t.closest('input[type="range"], input[type="text"], textarea, select');
+    if (typing && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) return;
+    if (e.key === 'ArrowRight' || (e.key === 'PageDown')) { e.preventDefault(); this.next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); this.prev(); }
+    else if (e.key === 'Tab') this._trap(e);
+  }
+
+  _trap(e) {
+    const f = this.frame; if (!f) return;
+    const els = [...f.querySelectorAll('button:not([disabled]), a[href], input, select, [tabindex="0"]')].filter((el) => el.offsetParent !== null);
+    if (!els.length) return;
+    const first = els[0], last = els[els.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  next() { if (this.idx < this.total - 1) this.go(this.idx + 1, 1); }
+  prev() { if (this.idx > 0) this.go(this.idx - 1, -1); }
+
+  go(i, dir = 0, first = false) {
+    if (this.cleanup) { try { this.cleanup(); } catch (e) { /* ignora */ } this.cleanup = null; }
+    this.idx = i;
+    const s = this.story;
+    const isEnd = i >= s.cards.length;
+    const card = isEnd ? null : s.cards[i];
+    const el = this.cardEl;
+    el.className = 'sv__card' + (dir > 0 ? ' is-next' : dir < 0 ? ' is-prev' : '');
+    el.dataset.k = isEnd ? 'end' : card.k;
+    this.frame.dataset.k = el.dataset.k;
+    el.innerHTML = isEnd ? this._endHTML() : this._cardHTML(card);
+
+    // progresso
+    [...$('.sv__bars', this.frame).children].forEach((b, n) => {
+      b.className = n < i ? 'is-done' : n === i ? 'is-now' : '';
+    });
+    $('.sv__count', this.frame).textContent = `${i + 1} / ${this.total}`;
+    const prev = $('.sv__prev', this.frame); prev.disabled = i === 0;
+    const nxt = $('.sv__next', this.frame);
+    nxt.hidden = isEnd;
+    state.setPos(s.id, i);
+    if (isEnd) state.setDone(s.id);
+    this.hooks.onNavigate && this.hooks.onNavigate(s.id, i);
+
+    // acessibilidade
+    const live = $('#svLive', this.frame);
+    live.textContent = isEnd ? `Parada concluída: ${s.title}` : `Cartão ${i + 1} de ${this.total}. ${card.big || ''} ${card.small || ''}`;
+
+    // interações
+    if (!isEnd && card.k === 'widget') {
+      const host = $('.sv__wdg', el);
+      const ctx = { story: s, card, next: () => this.next(), toast: (m) => this.hooks.toast && this.hooks.toast(m) };
+      mountWidget(card.w, host, card, ctx).then((c) => { this.cleanup = c; }).catch((err) => {
+        console.error(err);
+        host.innerHTML = '<p class="sv__small">Não foi possível carregar este cartão. Toque em Continuar.</p>';
+      });
+    }
+    if (isEnd) this._bindEnd();
+
+    // dica de toque na primeira vez
+    if (first && i === 0 && !state.hintSeen() && !matchMedia('(pointer: fine) and (hover: hover)').matches) {
+      state.setHintSeen();
+      this.frame.insertAdjacentHTML('beforeend', `<div class="sv__coach" aria-hidden="true"><div>${ICON_L}<span>voltar</span></div><div>${ICON_R}<span>toque para avançar</span></div></div>`);
+      setTimeout(() => { const c = $('.sv__coach', this.frame); c && c.remove(); }, 3700);
+    }
+  }
+
+  _cardHTML(c) {
+    if (c.k === 'widget') {
+      return `<div class="sv__text"><h2 class="sv__big">${esc(c.big)}</h2><p class="sv__small">${esc(c.small)}</p></div><div class="sv__wdg" data-nonav></div>`;
+    }
+    const q = c.q ? `<blockquote class="sv__q">“${esc(c.q)}”<cite>${esc(c.ref || '')}</cite></blockquote>` : '';
+    const note = c.note ? `<p class="sv__note">${ICON_I}<span>${esc(c.note)}</span></p>` : '';
+    const link = c.link ? `<a class="sv__btn sv__btn--pri sv__link" href="${esc(c.link.href)}" target="_blank" rel="noopener">${esc(c.link.txt)}</a>` : '';
+    const ref = c.ref && !c.q ? `<span class="sv__ref">No livro: ${esc(c.ref)}</span>` : '';
+    return `<div class="sv__stage">${stageHTML(c.art, this.story.scene)}</div>
+      <div class="sv__text">
+        <h2 class="sv__big">${esc(c.big)}</h2>
+        ${c.small ? `<p class="sv__small">${esc(c.small)}</p>` : ''}
+        ${q}${note}${link}${ref}
+      </div>`;
+  }
+
+  _endHTML() {
+    const s = this.story;
+    const nxt = STORIES[STORIES.findIndex((x) => x.id === s.id) + 1];
+    return `<div class="sv__stage" style="--stage-h:34%">${stageHTML({ items: [s.icon, 'star', 'leaf'], layout: 'three', anim: 'bounce' }, s.scene)}</div>
+      <div class="sv__text sv__end">
+        <h2 class="sv__big">Parada concluída.</h2>
+        <p class="sv__take"><b>Leve isto</b>${esc(s.recap)}</p>
+        <p class="sv__read"><b>Para ler no livro:</b> ${esc(s.book)}.</p>
+        <div class="sv__actions">
+          ${nxt ? `<button class="sv__btn sv__btn--pri" type="button" data-act="next">Próxima: ${esc(nxt.title)}</button>` : `<button class="sv__btn sv__btn--pri" type="button" data-act="home">Voltar ao início</button>`}
+          <button class="sv__btn sv__btn--ghost" type="button" data-act="again">Rever</button>
+          <button class="sv__btn sv__btn--ghost" type="button" data-act="path">Ver a jornada</button>
+        </div>
+      </div>`;
+  }
+
+  _bindEnd() {
+    const s = this.story;
+    const nxt = STORIES[STORIES.findIndex((x) => x.id === s.id) + 1];
+    this.cardEl.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-act]'); if (!b) return;
+      const act = b.dataset.act;
+      if (act === 'next' && nxt) this.hooks.onOpenStory && this.hooks.onOpenStory(nxt.id);
+      else if (act === 'again') this.go(0, -1);
+      else if (act === 'path' || act === 'home') this.close(act === 'path' ? '#jornada' : '#topo');
+    });
+  }
+
+  close(scrollTo) {
+    if (!this.isOpen) return;
+    if (this.cleanup) { try { this.cleanup(); } catch (e) { /* ignora */ } this.cleanup = null; }
+    document.removeEventListener('keydown', this._key);
+    this.root.classList.remove('is-open');
+    document.body.classList.remove('is-locked');
+    const done = () => { this.root.hidden = true; this.root.innerHTML = ''; };
+    setTimeout(done, 280);
+    const f = this.lastFocus; this.lastFocus = null;
+    if (f && f.focus) { try { f.focus({ preventScroll: true }); } catch (e) { /* ignora */ } }
+    this.story = null;
+    this.hooks.onClose && this.hooks.onClose(scrollTo);
+  }
+}
+
+export { icon };

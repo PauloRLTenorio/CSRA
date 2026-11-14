@@ -2,19 +2,180 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CSRA — em construção</title>
-<style>
-  html,body{height:100%;margin:0}
-  body{display:grid;place-items:center;background:#fbf6ea;color:#1f3d2b;font:18px/1.5 Georgia,serif;text-align:center;padding:24px}
-  h1{font-size:clamp(2.4rem,9vw,4rem);margin:0 0 .2em;letter-spacing:.08em}
-  p{margin:0;opacity:.75}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CSRA — Conselhos Sobre o Regime Alimentar · uma jornada em cartões</title>
+<meta name="description" content="Tudo começou com um cardápio. Uma jornada interativa, em cartões curtos, pelas ideias do livro Conselhos sobre o Regime Alimentar: comer, pensar e viver com equilíbrio.">
+<meta name="theme-color" content="#fff8ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1e19" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://paulorltenorio.github.io/CSRA/">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="CSRA">
+<meta property="og:title" content="CSRA — Tudo começou com um cardápio">
+<meta property="og:description" content="Uma jornada interativa, em cartões curtos, pelas ideias do livro Conselhos sobre o Regime Alimentar.">
+<meta property="og:url" content="https://paulorltenorio.github.io/CSRA/">
+<meta property="og:image" content="https://paulorltenorio.github.io/CSRA/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preload" href="assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/story.css">
+<link rel="stylesheet" href="css/widgets.css">
+<script>
+  // aplica o tema salvo antes da pintura, para não piscar
+  try { var t = localStorage.getItem('csra.tema'); if (t === 'day' || t === 'night') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
 </head>
 <body>
-<main>
-  <h1>CSRA</h1>
-  <p>Conselhos sobre o Regime Alimentar — uma jornada em cartões.<br>Em construção.</p>
+<a class="skip" href="#jornada">Pular para a jornada</a>
+
+<header class="hdr" id="hdr">
+  <a class="brand" href="#/" aria-label="CSRA — início">
+    <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#1e4d3a"/><path d="M20 31V16" stroke="#ffe9bf" stroke-width="2.6" stroke-linecap="round"/><path d="M20 21c-6 0-9-3-9-8 6 0 9 3 9 8zM20 17c0-5 3-8 9-8 0 5-3 8-9 8z" fill="#9bd1a7"/><circle cx="20" cy="31" r="2.4" fill="#f4b73f"/></svg>
+    <span class="brand__txt">CSRA</span>
+  </a>
+  <nav class="hdr__nav" aria-label="Seções">
+    <a href="#jornada">Jornada</a>
+    <a href="#brinque">Brinque</a>
+    <a href="#livro">O livro</a>
+  </nav>
+  <div class="hdr__tools">
+    <button class="icon-btn" id="btnContinuar" type="button" hidden>Continuar</button>
+    <button class="icon-btn icon-btn--round" id="btnTema" type="button" aria-label="Alternar entre tema claro e escuro" title="Dia / noite">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><g class="i-sun" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M18.7 5.3l-1.8 1.8M7.1 16.9l-1.8 1.8"/></g><path class="i-moon" d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="conteudo">
+
+  <!-- HERO -->
+  <section class="hero" id="topo" aria-labelledby="hero-titulo">
+    <div class="hero__sky" aria-hidden="true">
+      <div class="hero__sun"></div>
+      <svg class="hero__cloud hero__cloud--a" viewBox="0 0 100 100"><use href="#s-cloud"/></svg>
+      <svg class="hero__cloud hero__cloud--b" viewBox="0 0 100 100"><use href="#s-cloud"/></svg>
+      <svg class="hero__hills" viewBox="0 0 1200 300" preserveAspectRatio="none">
+        <path d="M0 150C150 80 300 70 460 120s330 70 500 10 190-20 240 0V300H0z" fill="url(#g-hill-1)"/>
+        <path d="M0 210C140 150 290 150 430 190s300 40 470-10 220-20 300 10V300H0z" fill="url(#g-hill-2)"/>
+        <path d="M0 262C180 230 330 236 520 262s380 20 680-14V300H0z" fill="url(#g-hill-3)"/>
+      </svg>
+    </div>
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <p class="eyebrow">CSRA · Conselhos Sobre o Regime Alimentar</p>
+        <h1 id="hero-titulo">Tudo começou com um cardápio.</h1>
+        <p class="lead">O primeiro foi escolhido pelo Criador. Nesta jornada, em cartões curtos, você descobre o que um livro de mais de cem anos diz sobre comer, pensar e viver com equilíbrio.</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" id="btnComecar" href="#/h/primeiro-cardapio">Começar a jornada</a>
+          <a class="btn btn--ghost" href="#jornada">Escolher uma parada</a>
+        </div>
+        <p class="hero__meta"><span>≈ 12 min no total</span><span>sem cadastro</span><span>feito para o celular</span></p>
+      </div>
+      <div class="hero__scene" id="heroScene" role="group" aria-label="Uma mesa posta com cesta de frutas, pão, jarra de água, relógio, lâmpada e balança. Toque nos objetos para abrir uma história."></div>
+    </div>
+    <p class="hero__hint" id="heroHint">Toque nos objetos da mesa</p>
+  </section>
+
+  <!-- TRÊS IDEIAS -->
+  <section class="ideias" id="ideia" aria-labelledby="ideias-titulo">
+    <div class="container">
+      <p class="eyebrow">O livro em três ideias</p>
+      <h2 id="ideias-titulo" class="h2">O que cabe numa colher de conversa</h2>
+      <ol class="ideias__lista">
+        <li class="ideia">
+          <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#s-hands"/></svg>
+          <h3>O corpo é emprestado.</h3>
+          <p>A vida é um empréstimo a investir bem. Cuidar do corpo é uma forma de dizer obrigado a quem o criou.</p>
+        </li>
+        <li class="ideia">
+          <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#s-bulb"/></svg>
+          <h3>A mesa conversa com a mente.</h3>
+          <p>O que pesa o estômago também embaça o pensamento. Para decidir bem, o prato precisa ajudar.</p>
+        </li>
+        <li class="ideia">
+          <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#s-scale"/></svg>
+          <h3>Equilíbrio vence extremos.</h3>
+          <p>Simples, saboroso, no horário certo. Sem culpa e sem impor nada a ninguém.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- JORNADA -->
+  <section class="jornada" id="jornada" aria-labelledby="jornada-titulo">
+    <div class="container">
+      <p class="eyebrow">A jornada</p>
+      <h2 id="jornada-titulo" class="h2">Doze paradas. Uma mesa.</h2>
+      <p class="sec-lead">Cada parada leva de 1 a 2 minutos. Toque para avançar, deslize ou use as setas do teclado. Siga a ordem ou escolha o que mais chama a atenção.</p>
+      <div class="tree" id="tree" aria-live="polite"></div>
+      <ol class="path" id="path"></ol>
+    </div>
+  </section>
+
+  <!-- BRINQUE -->
+  <section class="brinque" id="brinque" aria-labelledby="brinque-titulo">
+    <div class="container">
+      <p class="eyebrow">Brinque com as ideias</p>
+      <h2 id="brinque-titulo" class="h2">Ideias que a gente entende com a mão</h2>
+      <p class="sec-lead">Pequenos jogos para sentir, em poucos segundos, o que o livro quer dizer. Cada um abre direto no cartão certo.</p>
+      <ul class="toys" id="toys"></ul>
+    </div>
+  </section>
+
+  <!-- O LIVRO -->
+  <section class="livro" id="livro" aria-labelledby="livro-titulo">
+    <div class="container livro__grid">
+      <div class="livro__capa" aria-hidden="true">
+        <div class="capa">
+          <span class="capa__aut">Ellen G. White</span>
+          <span class="capa__tit">Conselhos Sobre o Regime Alimentar</span>
+          <svg viewBox="0 0 100 100"><use href="#s-wheat"/></svg>
+        </div>
+      </div>
+      <div class="livro__txt">
+        <p class="eyebrow">Sobre o livro</p>
+        <h2 id="livro-titulo" class="h2">Para quem quiser ir à fonte</h2>
+        <p><strong>Conselhos Sobre o Regime Alimentar</strong> reúne trechos dos escritos de Ellen G. White (1827–1915) sobre alimentação, escritos entre 1863 e 1909 e organizados em 25 capítulos pelos depositários dos seus escritos, em 1938.</p>
+        <p>Este site <strong>não reproduz o livro</strong>. Ele conta, em palavras próprias, as ideias centrais de cada parte, para despertar a curiosidade e levar você ao texto completo, onde estão o contexto, as ressalvas e os detalhes.</p>
+        <p class="livro__links">
+          <a class="btn btn--sun" href="https://media4.egwwritings.org/pdf/pt_CRA%28CD%29.pdf" target="_blank" rel="noopener">Ler o livro completo (PDF gratuito)</a>
+          <a class="btn btn--ghost" href="https://egwwritings.org" target="_blank" rel="noopener">egwwritings.org</a>
+        </p>
+        <aside class="aviso" aria-labelledby="aviso-t">
+          <h3 id="aviso-t">Um aviso importante</h3>
+          <p>Este é um conteúdo devocional e informativo, baseado em textos escritos há mais de um século. <strong>Não substitui a orientação de um médico ou nutricionista.</strong> Gestantes, crianças, idosos, pessoas com doenças ou que usam medicamentos devem consultar um profissional antes de mudar a alimentação.</p>
+          <p>Projeto independente e sem fins lucrativos. Não é um site oficial do Ellen G. White Estate nem de qualquer instituição.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
 </main>
+
+<footer class="ftr">
+  <div class="container ftr__in">
+    <p class="ftr__brand">CSRA</p>
+    <p class="ftr__txt">Uma jornada em cartões inspirada no livro <em>Conselhos Sobre o Regime Alimentar</em>. Os textos do site são em palavras próprias; os trechos curtos do livro sempre indicam o capítulo e a passagem.</p>
+    <p class="ftr__links">
+      <a href="#topo">Voltar ao topo</a>
+      <button type="button" id="btnCompartilhar" class="linklike">Compartilhar</button>
+    </p>
+  </div>
+</footer>
+
+<div id="viewer" class="sv" hidden></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<noscript><p style="padding:24px;text-align:center;font:16px system-ui">Este site é interativo e precisa de JavaScript para mostrar as histórias. Para ler o livro completo: <a href="https://media4.egwwritings.org/pdf/pt_CRA%28CD%29.pdf">PDF gratuito</a>.</p></noscript>
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
