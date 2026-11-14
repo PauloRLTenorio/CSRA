@@ -24,6 +24,8 @@ Dica: o navegador guarda arquivos em cache; recarregue com Cmd+Shift+R depois de
 | `js/ui/viewer.js` | O visualizador de cartões (toque, deslize, teclado, progresso) |
 | `js/ui/widgets/*.js` | As 11 interações (prato, nuvem, relógio, pausa etc.) |
 | `css/*.css` | Visual: `tokens.css` (cores e tamanhos), `home.css`, `story.css`, `widgets.css` |
+| `js/ui/qr.js` · `js/ui/leve.js` | Gerador de QR Code (puro, sem biblioteca) e o bloco "Leve com você" (tela cheia, copiar link) |
+| `assets/qr.svg` · `assets/qr.png` | QR Code do site, para slides e impressão. Gerado por `node scripts/gerar_qr.mjs` |
 
 ## Editar ou criar um cartão
 
@@ -80,6 +82,15 @@ O cartão final de cada parada ("Parada concluída") é criado sozinho, com o re
 3. Atualize a tabela de fontes: `node scripts/gerar_fontes.mjs` (gera `docs/FONTES.md`).
 
 **Não suba o PDF nem o texto extraído para o repositório.** O `.gitignore` já ignora `*.pdf` e a pasta `_trabalho/`.
+
+## QR Code do site
+
+O QR de `assets/qr.svg` e `assets/qr.png` aponta para o endereço do `<link rel="canonical">` do `index.html`. Se o endereço mudar (por exemplo, um domínio próprio):
+
+1. Troque o endereço no `index.html` (canonical, `og:url`, `og:image`, JSON-LD), em `sitemap.xml`, `robots.txt` e nos textos de compartilhar (`js/main.js`, `js/ui/viewer.js`, `js/ui/widgets/compartilhar.js`, `frase.js` e `plano.js`).
+2. Rode `node scripts/gerar_qr.mjs` e depois `node scripts/gerar_sw.mjs`.
+
+Para testar um QR de qualquer texto sem mexer no site: `node scripts/gerar_qr.mjs "texto" pasta-de-teste`. No macOS, dá para conferir a leitura com o leitor nativo (CoreImage/`CIDetector`) ou apontando a câmera do celular para a tela.
 
 ## Publicar
 

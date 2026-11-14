@@ -13,6 +13,7 @@ Um site feito para quem está acostumado a conteúdo curto (stories, shorts, sta
 - **Cartões em tela cheia:** toque, deslize ou use as setas do teclado; barra de progresso; "continuar de onde parou".
 - **Modo palestrante:** botão ▶ reproduz os cartões sozinhos; se o aparelho tiver voz em português, o botão de som narra em voz alta (usa a voz do próprio navegador ou do sistema; o site não envia nada para servidor nenhum, mas algumas vozes do navegador podem ser online).
 - **11 interações:** montar o primeiro prato, nuvem sobre a mente, quantos pratos cabem, relógio do dia, pausa de 10 segundos, horta, balança do equilíbrio, roda dos oito remédios, "o que você diria?", plano de 7 dias, carta com frase do livro (e imagem para stories).
+- **QR Code do site:** bloco "Leve com você" (tela cheia para projetar numa palestra, copiar o link, baixar o PNG) e o mesmo QR dentro da imagem para stories.
 - **Celular primeiro** (em pé e deitado), com tema claro/escuro, sem cadastro e sem rastreamento.
 
 ## Como foi feito
@@ -26,7 +27,7 @@ js/data/imagens.js    troca de ilustrações por imagens (Gemini etc.)
 js/ui/…               visualizador, ilustrações, interações
 css/…                 estilos e tokens de design
 docs/                 guias: editar, imagens do Gemini, fontes de cada cartão
-scripts/              conferência das citações e geração de docs/FONTES.md
+scripts/              conferência das citações, docs/FONTES.md, service worker (sw.js) e QR Code (assets/qr.*)
 ```
 
 ## Direitos autorais e cuidados

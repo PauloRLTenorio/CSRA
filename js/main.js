@@ -6,6 +6,7 @@ import { Viewer } from './ui/viewer.js';
 import { mountHero } from './ui/hero.js';
 import { renderJourney, observeReveal } from './ui/journey.js';
 import { img } from './data/imagens.js';
+import { mountLeve } from './ui/leve.js';
 
 const $ = (s) => document.querySelector(s);
 
@@ -128,6 +129,7 @@ $('#btnCompartilhar').addEventListener('click', async () => {
   } catch (e) { /* o usuário cancelou */ }
 });
 
+try { mountLeve({ toast }); } catch (e) { /* bloco opcional: nunca pode derrubar o resto */ }
 observeReveal();
 sync();
 

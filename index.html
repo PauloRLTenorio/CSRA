@@ -178,7 +178,35 @@
       </div>
     </div>
   </section>
+
+  <!-- LEVE COM VOCÊ: QR Code do site (conversa, grupo, palestra) -->
+  <section class="leve" id="leve" aria-labelledby="leve-titulo">
+    <div class="container leve__grid">
+      <img class="leve__img" src="assets/qr.svg" width="240" height="240" alt="QR Code que abre o CSRA em paulorltenorio.github.io/CSRA" loading="lazy" decoding="async">
+      <div class="leve__txt">
+        <p class="eyebrow">Leve com você</p>
+        <h2 id="leve-titulo" class="h2">Aponte a câmera e leve o CSRA</h2>
+        <p class="sec-lead">Mostre este código numa conversa, num grupo ou na tela de uma palestra: quem apontar a câmera do celular abre o site na hora.</p>
+        <p class="leve__act">
+          <button type="button" class="btn btn--primary" id="leveTela" hidden>Mostrar em tela cheia</button>
+          <button type="button" class="btn btn--ghost" id="leveCopiar" hidden>Copiar o link</button>
+          <a class="btn btn--ghost" href="assets/qr.png" download="csra-qrcode.png">Baixar o QR Code</a>
+        </p>
+      </div>
+    </div>
+  </section>
 </main>
+
+<dialog class="qrfull" id="qrfull" aria-labelledby="qrfull-t">
+  <div class="qrfull__in">
+    <img class="qrfull__img" src="assets/qr.svg" width="640" height="640" alt="QR Code que abre o CSRA">
+    <div class="qrfull__side">
+      <p class="qrfull__t" id="qrfull-t">Aponte a câmera do celular</p>
+      <p class="qrfull__u">paulorltenorio.github.io/CSRA</p>
+      <button type="button" class="btn btn--primary" data-fechar>Fechar</button>
+    </div>
+  </div>
+</dialog>
 
 <footer class="ftr">
   <div class="container ftr__in">
@@ -186,6 +214,7 @@
     <p class="ftr__txt">Uma jornada em cartões inspirada no livro <em>Conselhos Sobre o Regime Alimentar</em>. Os textos do site são em palavras próprias; os trechos curtos do livro sempre indicam o capítulo e a passagem.</p>
     <p class="ftr__links">
       <a href="#topo">Voltar ao topo</a>
+      <a href="#leve">QR Code</a>
       <button type="button" id="btnCompartilhar" class="linklike">Compartilhar</button>
     </p>
   </div>

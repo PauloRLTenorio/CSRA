@@ -126,6 +126,7 @@
 .hero__quick a { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--sun); text-decoration-thickness: 2px; }
 .hero__quick a:hover { text-decoration-color: currentColor; }
 .ideias, .jornada, .brinque, .livro { padding: clamp(64px, 11vw, 120px) 0; position: relative; }
+.leve { padding: clamp(56px, 9vw, 96px) 0; position: relative; }
 .ideias { background: var(--paper); }
 .ideias__lista { display: grid; gap: 16px; margin-top: 32px; }
 .ideia {
@@ -238,6 +239,35 @@
 .aviso h3 { font-size: 1.1rem; margin-bottom: 8px; }
 .aviso p { font-size: .92rem; color: var(--ink); }
 @media (min-width: 860px) { .livro__grid { grid-template-columns: 300px 1fr; gap: 64px; } }
+
+/* leve com você: QR Code (sempre preto sobre branco, em qualquer tema, para a câmera ler) */
+.leve { background: var(--paper-2); }
+.leve__grid { display: grid; gap: 28px; align-items: center; justify-items: start; }
+.leve__img { display: block; width: min(232px, 64vw); height: auto; aspect-ratio: 1; border-radius: 20px; background: #fff; box-shadow: var(--shadow-2); transform: rotate(-2deg); transition: transform .5s var(--ease-spring); }
+.leve__img:hover { transform: rotate(0) scale(1.03); }
+.leve__act { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 0; }
+@media (min-width: 760px) { .leve__grid { grid-template-columns: auto 1fr; gap: 64px; } .leve__img { width: 248px; } }
+
+.qrfull { border: 0; padding: 0; width: min(92vw, 620px); border-radius: 28px; background: var(--card); color: var(--ink); box-shadow: var(--shadow-2); overflow: auto; }
+.qrfull::backdrop { background: rgba(8, 20, 14, .86); }
+.qrfull__in { display: grid; gap: 12px; justify-items: center; text-align: center; padding: 22px 22px 24px; }
+.qrfull__img { display: block; width: min(100%, 64vh, 520px); height: auto; aspect-ratio: 1; border-radius: 16px; background: #fff; box-shadow: var(--shadow-1); }
+.qrfull__side { display: grid; gap: 12px; justify-items: center; }
+.qrfull__t { font: 600 1.35rem/1.2 var(--font-serif); margin: 6px 0 0; }
+.qrfull__u { font: 700 1.05rem var(--font-sans); letter-spacing: .01em; color: var(--ink-2); margin: 0 0 6px; }
+@media (max-height: 520px) {
+  .qrfull { width: min(94vw, 720px); }
+  .qrfull__in { grid-template-columns: auto 1fr; align-items: center; gap: 26px; padding: 16px 22px; }
+  .qrfull__img { width: min(66vh, 280px); }
+  .qrfull__side { justify-items: start; text-align: left; gap: 10px; }
+  .qrfull__t { margin: 0; }
+  .qrfull__u { margin: 0 0 8px; }
+  .qrfull__side .btn { min-height: 46px; padding: .6rem 1.4rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .qrfull[open] { animation: qr-in .35s var(--ease) both; }
+  @keyframes qr-in { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: none; } }
+}
 
 .ftr { background: var(--c-forest); color: #ffe9bf; padding: 44px 0 52px; }
 :root[data-theme="night"] .ftr { background: #0a1712; }

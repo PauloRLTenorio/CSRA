@@ -1,5 +1,6 @@
 // "Convide alguém": link, texto e uma imagem vertical para stories/status (gerada no seu aparelho).
 import { $, esc } from './util.js';
+import { qrCanvas } from '../qr.js';
 
 const SITE = 'https://paulorltenorio.github.io/CSRA/';
 const TXT = 'Tudo começou com um cardápio. Uma jornada em cartões pelas ideias do livro Conselhos sobre o Regime Alimentar.';
@@ -21,6 +22,13 @@ function wrap(ctx, text, maxW) {
   if (cur) lines.push(cur); return lines;
 }
 
+// retângulo arredondado sem depender de ctx.roundRect (aparelhos mais antigos)
+function rrPath(c, x, y, w, h, r) {
+  c.beginPath(); c.moveTo(x + r, y);
+  c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r);
+  c.closePath();
+}
+
 async function draw(canvas) {
   const W = 1080, H = 1920; canvas.width = W; canvas.height = H;
   const c = canvas.getContext('2d');
@@ -37,13 +45,22 @@ async function draw(canvas) {
   if (apple) c.drawImage(apple, 380, 1000, 420, 420);
   if (leaf) c.drawImage(leaf, 700, 1070, 300, 300);
   c.fillStyle = '#17382a'; c.textAlign = 'left';
-  c.font = '600 40px Inter, system-ui, sans-serif'; c.fillText('CSRA · CONSELHOS SOBRE O REGIME ALIMENTAR', 90, 200);
+  c.font = '600 34px Inter, system-ui, sans-serif'; c.fillText('CSRA · CONSELHOS SOBRE O REGIME ALIMENTAR', 90, 200);
   c.font = '600 128px Newsreader, Georgia, serif';
   let y = 420; wrap(c, 'Tudo começou com um cardápio.', 900).forEach((l) => { c.fillText(l, 90, y); y += 140; });
   c.font = '500 46px Inter, system-ui, sans-serif'; c.fillStyle = '#2f4b3c';
   y += 30; wrap(c, 'Uma jornada em cartões pelas ideias de um livro de mais de cem anos.', 860).forEach((l) => { c.fillText(l, 90, y); y += 66; });
   c.font = '700 44px Inter, system-ui, sans-serif'; c.fillStyle = '#fff8ea';
   c.fillText('paulorltenorio.github.io/CSRA', 90, 1840);
+  // QR Code no canto (preto sobre branco, com a margem exigida pela norma), para a câmera abrir o site direto da imagem
+  try {
+    const q = qrCanvas(document.createElement('canvas'), SITE, 300), s = q.width, x = W - 90 - s, yq = 1450;
+    c.save(); c.shadowColor = 'rgba(10,30,20,.32)'; c.shadowBlur = 36; c.shadowOffsetY = 12;
+    rrPath(c, x, yq, s, s, 28); c.fillStyle = '#fff'; c.fill(); c.restore();
+    c.save(); rrPath(c, x, yq, s, s, 28); c.clip(); c.drawImage(q, x, yq); c.restore();
+    c.font = '700 34px Inter, system-ui, sans-serif'; c.fillStyle = '#17382a'; c.textAlign = 'center';
+    c.fillText('Aponte a câmera', x + s / 2, yq - 26); c.textAlign = 'left';
+  } catch (e) { /* sem QR, a imagem continua válida */ }
 }
 
 export function mount(host, card, ctx) {
