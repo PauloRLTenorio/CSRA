@@ -129,3 +129,8 @@ $('#btnCompartilhar').addEventListener('click', async () => {
 
 observeReveal();
 sync();
+
+// 8) offline: service worker só no site publicado (no teste local não registra, para não confundir o cache)
+if ('serviceWorker' in navigator && /\.github\.io$/.test(location.hostname)) {
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
