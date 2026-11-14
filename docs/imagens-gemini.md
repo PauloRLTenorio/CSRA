@@ -12,7 +12,7 @@ O site já funciona com ilustrações em SVG feitas à mão (leves, nítidas e a
    'parada-1': 'assets/img/parada-1.webp',
    ```
 
-4. Faça o commit e o push. Em 1 ou 2 minutos o GitHub Pages publica. Chave vazia (`''`) = o site continua usando a ilustração SVG.
+4. Rode `node scripts/gerar_sw.mjs` (inclui as imagens no cache offline), faça o commit e o push. Em 1 ou 2 minutos o GitHub Pages publica. Chave vazia (`''`) = o site continua usando a ilustração SVG.
 
 ## Onde cada imagem aparece
 

@@ -79,7 +79,8 @@ window.addEventListener('hashchange', () => {
 function openStory(id) { pushed = true; location.hash = `#/h/${id}`; }
 
 // 5) página inicial
-if (img('hero')) document.documentElement.style.setProperty('--hero-img', `url("${img('hero')}")`);
+if (img('hero')) document.documentElement.classList.add('has-hero-img');
+if (img('hero')) document.documentElement.style.setProperty('--hero-img', `url("${new URL(img('hero'), document.baseURI).href}")`);
 mountHero($('#heroScene'), { onOpen: openStory });
 function refresh() {
   renderJourney();

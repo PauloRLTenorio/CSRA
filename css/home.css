@@ -48,6 +48,8 @@
 .hero__sky { position: absolute; inset: 0; z-index: -1; background: var(--hero-img, none) center / cover no-repeat, linear-gradient(180deg, #bfe6e6 0%, #ffeccb 56%, #ffd5a3 100%); }
 :root[data-theme="night"] .hero__sky { background: linear-gradient(180deg, #0c2422 0%, #17392f 55%, #2c4c3b 100%); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="day"]) .hero__sky { background: linear-gradient(180deg, #0c2422 0%, #17392f 55%, #2c4c3b 100%); } }
+.has-hero-img .hero__sky::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, color-mix(in srgb, var(--paper) 78%, transparent), color-mix(in srgb, var(--paper) 30%, transparent) 60%, transparent); }
+@media (max-width: 899px) { .has-hero-img .hero__sky::after { background: linear-gradient(180deg, color-mix(in srgb, var(--paper) 72%, transparent), transparent 70%); } }
 .hero__sun {
   position: absolute; top: 4%; right: -6%; width: clamp(220px, 38vw, 460px); aspect-ratio: 1; border-radius: 50%;
   background: radial-gradient(circle, #fffbe0 0%, #ffe48f 38%, rgba(255, 228, 143, 0) 70%);
