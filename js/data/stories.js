@@ -22,6 +22,7 @@ export const STORIES = [
       say('Cada terra tem a sua mesa.', 'O livro pede alimentos de acordo com o clima, a estação e o que a sua região produz. Entre os exemplos citados estão arroz, milho, feijão e lentilha.', { items: ['corn', 'bowl', 'tomato'], layout: 'three', anim: 'float' }, 'Cap. 4, §§ 144–146'),
       say('O caminho de volta é passo a passo.', 'A autora fala em ser conduzido de volta ao plano original aos poucos, com cuidado e paciência, sem atropelar ninguém.', { items: ['feet', 'leaf'], layout: 'two', anim: 'sway' }, 'Cap. 23, § 648'),
       say('E o seu prato de hoje?', 'Sem nota e sem culpa: quantas cores da natureza ele tinha?', { items: ['plate', 'apple', 'leaf', 'carrot'], layout: 'orbit', anim: 'pulse' }, null),
+      widget('reflexao', 'Uma pergunta para levar', 'Escreva se quiser. Fica só no seu aparelho.', { pergunta: 'Qual alimento “do jardim” você poderia acrescentar ao seu prato esta semana?' }),
     ],
   },
 
@@ -39,6 +40,7 @@ export const STORIES = [
       say('Saber e não fazer pesa.', 'Muita gente diz: “sei mais do que pratico”. O livro responde que cada raio de luz recebido pede um passo.', { items: ['bulb', 'feet'], layout: 'two', anim: 'bounce' }, 'Cap. 1, §§ 12–13'),
       say('Saúde é um tesouro.', 'Dinheiro, estudo e prestígio perdem o sabor quando falta saúde. Nada compra de volta o que ela dá.', { items: ['star', 'heart', 'star'], layout: 'three', anim: 'float' }, 'Cap. 1, § 14', { q: 'A saúde é um tesouro.' }),
       say('Recomeçar é sempre possível.', 'O livro insiste que Deus é compassivo com quem, ao enxergar a luz, decide mudar. O ponto de partida é o cuidado, não a culpa.', { items: ['hands'], layout: 'one', anim: 'sway' }, 'Cap. 1, § 19'),
+      widget('reflexao', 'Uma pergunta para levar', 'Escreva se quiser. Fica só no seu aparelho.', { pergunta: 'O que mudaria na sua semana se você tratasse o corpo como algo emprestado, que será devolvido bem cuidado?' }),
     ],
   },
 
@@ -57,6 +59,7 @@ export const STORIES = [
       say('Corpo esgotado, escolhas mais difíceis.', 'Tudo o que enfraquece o corpo, diz o livro, deixa a mente menos capaz de distinguir o bem do mal e a vontade menos firme para escolher o certo.', { items: ['cloud', 'moon'], layout: 'two', anim: 'float' }, 'Cap. 2, § 62'),
       say('Antes de algo importante, coma leve.', 'Para um culto, uma prova ou uma conversa decisiva, o livro sugere uma refeição mais simples e menor, para estar desperto.', { items: ['bread', 'glass'], layout: 'two', anim: 'bounce' }, 'Cap. 7, § 223'),
       say('Paz no prato, paz no humor.', 'O livro liga um estômago tranquilo a um temperamento mais tranquilo. Quem está bem por dentro tende a ser mais gentil por fora.', { items: ['heart', 'plate'], layout: 'two', anim: 'pulse' }, 'Cap. 5, § 187', { q: 'um estômago pacífico' }),
+      widget('reflexao', 'Uma pergunta para levar', 'Escreva se quiser. Fica só no seu aparelho.', { pergunta: 'Em que momento do dia o peso da refeição mais atrapalha o seu pensamento?' }),
     ],
   },
 
@@ -74,6 +77,7 @@ export const STORIES = [
       say('O paladar aprende.', 'Quem se acostumou a sabores muito fortes demora a apreciar o simples. Mas o livro garante: persista, e o sabor delicado do alimento natural passa a agradar.', { items: ['lemon', 'leaf'], layout: 'two', anim: 'sway' }, 'Cap. 4, § 120', { q: 'Levará tempo até que o gosto se torne natural' }),
       say('Hospitalidade não precisa de banquete.', 'Jesus alimentou uma multidão com pão de cevada e peixe. O livro pede casas generosas e mesas simples, sem arruinar o orçamento nem o estômago de quem recebe.', { items: ['bread', 'hands'], layout: 'two', anim: 'float' }, 'Cap. 4, §§ 127–133'),
       say('O que sobra, serve.', 'O livro valoriza a economia: preparar de modo natural e barato, não desperdiçar sobras e usar o que se poupa para ajudar alguém.', { items: ['pot', 'hands'], layout: 'two', anim: 'pulse' }, 'Cap. 4, § 134; Cap. 14, § 386'),
+      widget('reflexao', 'Uma pergunta para levar', 'Escreva se quiser. Fica só no seu aparelho.', { pergunta: 'Qual refeição da sua semana poderia ter menos pratos e mais sabor?' }),
     ],
   },
 
@@ -92,6 +96,7 @@ export const STORIES = [
       say('Duas ou três? O livro não faz disso um teste.', 'A autora preferia duas refeições, mas escreveu que ninguém deve ser obrigado: alguns se dão melhor com três leves. Persuasão, nunca imposição.', { items: ['plate', 'plate'], layout: 'two', anim: 'sway' }, 'Cap. 9, §§ 277–279'),
       say('Jantar leve — ou nenhum.', 'Uma ceia pesada, perto da hora de dormir, atrapalha o sono e o descanso do estômago. Se precisar comer à noite, o livro sugere algo bem leve, como pão torrado e fruta.', { items: ['moon', 'bread'], layout: 'two', anim: 'float' }, 'Cap. 9, §§ 272–273'),
       say('Devagar. Com gratidão.', 'Mastigar bem, sem pressa, e deixar as preocupações do lado de fora da mesa. O livro pede uma refeição calma e um coração agradecido.', { items: ['heart', 'plate'], layout: 'two', anim: 'pulse' }, 'Cap. 5, § 175', { q: 'comei devagar e satisfeitos, o coração cheio de gratidão' }),
+      widget('reflexao', 'Uma pergunta para levar', 'Escreva se quiser. Fica só no seu aparelho.', { pergunta: 'Qual horário é o mais difícil de respeitar na sua rotina, e o que ajudaria?' }),
     ],
   },
 
@@ -109,6 +114,7 @@ export const STORIES = [
       say('Daniel pediu dez dias.', 'Em Babilônia, Daniel propôs um teste curto: dez dias com comida simples. O livro conta que o resultado foi evidente, no semblante e no vigor.', { items: ['bowl', 'glass'], layout: 'two', anim: 'bounce' }, 'Cap. 1, § 34'),
       say('Primeiro o coração.', 'Tirar coisas do prato sem mudar por dentro não cura o apetite. A mudança verdadeira começa no coração e depois aparece na mesa.', { items: ['heart'], layout: 'one', anim: 'pulse' }, 'Cap. 1, § 39', { q: 'Nenhuma mera restrição de vossa dieta curará vosso apetite doentio.' }),
       say('Você não precisa vencer sozinho.', 'O livro afirma que uma vida vitoriosa sobre o apetite é possível a quem une a própria vontade, fraca e vacilante, à vontade de Deus.', { items: ['anchor', 'hands'], layout: 'two', anim: 'sway' }, 'Cap. 8, §§ 265–266'),
+      widget('reflexao', 'Uma pergunta para levar', 'Escreva se quiser. Fica só no seu aparelho.', { pergunta: 'Na próxima vez que sentir vontade fora de hora, o que você vai fazer antes de comer?' }),
     ],
   },
 
@@ -126,6 +132,7 @@ export const STORIES = [
       say('Cozinhar é uma arte essencial.', 'O livro vai longe: põe as aulas de cozinha antes das de piano. Não despreza a música; só lembra o que sustenta a vida de todos os dias.', { items: ['pot', 'book'], layout: 'two', anim: 'float' }, 'Cap. 14, § 393', { q: 'A ciência culinária, porém, não é de pequena importância.' }),
       say('Aprenda — homens também.', 'O livro convoca homens e mulheres a aprender a cozinhar: um conhecimento que serve em casa, em viagem e na casa dos outros.', { items: ['adult', 'pot'], layout: 'two', anim: 'sway' }, 'Cap. 14, § 374', { q: 'Aprendam a cozinhar.' }),
       widget('horta', 'Plante algo', 'Toque nos canteiros: plante, regue e colha.'),
+      widget('reflexao', 'Uma pergunta para levar', 'Escreva se quiser. Fica só no seu aparelho.', { pergunta: 'Que prato simples você gostaria de aprender a fazer, e para quem cozinharia?' }),
     ],
   },
 
@@ -143,6 +150,7 @@ export const STORIES = [
       say('O exemplo ensina mais que o sermão.', 'O livro lembra que, quando os pais mantêm o próprio princípio à mesa, os filhos tendem a entrar na linha com naturalidade.', { items: ['adult', 'child'], layout: 'two', anim: 'sway' }, 'Cap. 13, § 344'),
       say('Dizer sim a tudo não é amor.', 'A autora usa uma expressão forte para ceder a todo desejo dos filhos só porque, no momento, é mais fácil do que negar.', { items: ['heart', 'hands'], layout: 'two', anim: 'pulse' }, 'Cap. 13, § 358', { q: 'bondade cruel' }),
       say('Ensine a ligar causa e efeito.', 'Em vez de só proibir, mostre o porquê. O livro pede que se ensine os filhos a raciocinar da causa para o efeito.', { items: ['bulb', 'child'], layout: 'two', anim: 'float' }, 'Cap. 25, § 783'),
+      widget('reflexao', 'Uma pergunta para levar', 'Escreva se quiser. Fica só no seu aparelho.', { pergunta: 'O que as pessoas que convivem com você aprendem hoje, olhando para a sua mesa?' }),
     ],
   },
 
@@ -161,6 +169,7 @@ export const STORIES = [
       say('Não faça da mesa um teste.', 'O livro pede persuasão, não imposição: ninguém deve ser medido pela forma de comer nem obrigado a mudar de uma vez.', { items: ['hands'], layout: 'one', anim: 'sway' }, 'Cap. 25, § 800', { q: 'Não fustigueis o povo. Guiai-o.' }),
       say('Ela mesma não vigiava os outros.', 'Em casa, cada um comia o que lhe fazia bem e, escreveu ela, não havia discussões. Ela procurava aprender o que era melhor para si e seguia em paz.', { items: ['house', 'heart'], layout: 'two', anim: 'float' }, 'Apêndice 1, § 25', { q: 'Não me faço critério para nenhuma outra pessoa.' }),
       say('Moderação à vista de todos.', 'O conselho bíblico citado no livro é um testemunho que se vê, não uma discussão que se vence.', { items: ['shield'], layout: 'one', anim: 'pulse' }, 'Cap. 21, § 592', { q: 'Seja a vossa moderação conhecida a todos os homens.' }),
+      widget('reflexao', 'Uma pergunta para levar', 'Escreva se quiser. Fica só no seu aparelho.', { pergunta: 'Onde você tende a exagerar: no descuido ou na cobrança, consigo ou com os outros?' }),
     ],
   },
 
@@ -179,6 +188,7 @@ export const STORIES = [
       say('Seja aluno do próprio corpo.', 'A autora escreveu que precisava conhecer a si mesma e aprender sempre como cuidar do corpo: ar, luz, exercício, roupa, comida e descanso.', { items: ['adult', 'book'], layout: 'two', anim: 'float' }, 'Cap. 17, § 454'),
       say('Fazer a parte — e confiar.', 'Orar por saúde e, ao mesmo tempo, fazer o que está ao alcance: o livro une fé e atitude. Deus ajuda a quem procura ajudar-se.', { items: ['anchor', 'hands'], layout: 'two', anim: 'sway' }, 'Cap. 1, §§ 29 e 38', { q: 'O Senhor ajuda aos que procuram ajudar-se' }),
       say('Remédio simples não substitui médico.', 'O livro valoriza hábitos saudáveis, e este site também. Mas doença pede avaliação profissional. Procure um médico e siga as orientações dele.', { items: ['shield'], layout: 'one', anim: 'pulse' }, null),
+      widget('reflexao', 'Uma pergunta para levar', 'Escreva se quiser. Fica só no seu aparelho.', { pergunta: 'Dos oito remédios, qual está mais esquecido na sua rotina?' }),
     ],
   },
 
@@ -196,6 +206,7 @@ export const STORIES = [
       say('Primeiro ensinar a cozinhar.', 'Antes de pedir mudanças, mostre como preparar comida saudável, saborosa e barata. O livro diz que não se deve apresentar as sugestões mais avançadas antes disso.', { items: ['pot', 'book'], layout: 'two', anim: 'float' }, 'Cap. 25, § 793', { q: 'instruir, instruir, instruir' }),
       say('Há tempo de falar e tempo de calar.', 'A autora não fazia palestras sobre comida a famílias pobres que recebiam um pouco de carne dos vizinhos. Primeiro, compaixão.', { items: ['heart'], layout: 'one', anim: 'pulse' }, 'Cap. 25, § 796', { q: 'Há tempo para falar, e tempo para calar.' }),
       say('Parte da mensagem, não a mensagem toda.', 'O livro é claro: a saúde é um ramo importante, mas não deve eclipsar o centro da fé. É um braço, não o corpo inteiro.', { items: ['anchor'], layout: 'one', anim: 'sway' }, 'Cap. 3, §§ 103–104'),
+      widget('reflexao', 'Uma pergunta para levar', 'Escreva se quiser. Fica só no seu aparelho.', { pergunta: 'Quem você gostaria de convidar para uma refeição simples e uma boa conversa?' }),
     ],
   },
 
@@ -216,7 +227,25 @@ export const STORIES = [
   },
 ];
 
-export const BY_ID = Object.fromEntries(STORIES.map((s) => [s.id, s]));
+// Versão curta (60 segundos) para quem tem pressa: aparece acima da lista de paradas.
+export const RESUMO = {
+  id: 'em-60-segundos', n: 0, title: 'O livro em 60 segundos',
+  hook: 'Seis cartões com o coração do livro.',
+  icon: 'clock', scene: 'garden',
+  theme: { a: '#cdebe8', b: '#ffe1ae', ink: '#17382a', accent: '#2b6b4f', dark: false },
+  recap: 'Mesa simples, no horário, com gratidão e equilíbrio: um cuidado que começa por dentro.',
+  book: 'O livro inteiro (25 capítulos e dois apêndices). Cada uma das doze paradas indica os capítulos certos',
+  cards: [
+    say('Tudo começou com um cardápio.', 'Frutas, grãos, nozes e verduras: o primeiro cardápio, escolhido pelo próprio Criador.', { items: ['apple', 'wheat', 'nut', 'leaf'], layout: 'four', anim: 'float' }, 'Cap. 4, § 111'),
+    say('A vida é um empréstimo.', 'Cuidar do corpo é uma forma de gratidão — não de obsessão.', { items: ['heart'], layout: 'one', anim: 'pulse' }, 'Cap. 1, § 1'),
+    say('A mesa conversa com a mente.', 'O que pesa o estômago embaça o pensamento. Uma refeição simples ajuda a pensar, decidir e ouvir.', { items: ['bulb', 'plate'], layout: 'two', anim: 'float' }, 'Cap. 5, §§ 153 e 175'),
+    say('Simples, no horário, sem exagero.', 'Poucos pratos, intervalos entre as refeições e nada de beliscar — sem transformar isso em teste para ninguém.', { items: ['clock', 'bowl', 'moon'], layout: 'three', anim: 'bounce' }, 'Cap. 9, §§ 267–282'),
+    say('Domínio próprio vem de dentro.', 'A mudança começa no coração e conta com uma força maior do que a nossa.', { items: ['anchor', 'heart'], layout: 'two', anim: 'sway' }, 'Cap. 1, § 39; Cap. 8, § 266'),
+    say('Equilíbrio vence extremos.', 'Comida saborosa, adequada a cada corpo, sem impor nada a ninguém. Cozinhar bem também é cuidar.', { items: ['scale', 'pot'], layout: 'two', anim: 'float' }, 'Cap. 11, § 324; Cap. 14, § 393'),
+  ],
+};
+
+export const BY_ID = { ...Object.fromEntries(STORIES.map((s) => [s.id, s])), [RESUMO.id]: RESUMO };
 
 // Frases curtas (<= 15 palavras) do livro, conferidas por script. Usadas no sorteio "Leve uma frase".
 export const FRASES = [
@@ -243,7 +272,7 @@ export const FRASES = [
 // Citações usadas nos cartões, reunidas para a conferência automática.
 export function todasCitacoes() {
   const out = [];
-  for (const s of STORIES) for (const c of s.cards) if (c.q) out.push(c.q);
+  for (const s of [...STORIES, RESUMO]) for (const c of s.cards) if (c.q) out.push(c.q);
   for (const f of FRASES) out.push(f.q);
   return out;
 }

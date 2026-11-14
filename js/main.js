@@ -5,6 +5,7 @@ import { state } from './state.js';
 import { Viewer } from './ui/viewer.js';
 import { mountHero } from './ui/hero.js';
 import { renderJourney, observeReveal } from './ui/journey.js';
+import { img } from './data/imagens.js';
 
 const $ = (s) => document.querySelector(s);
 
@@ -19,6 +20,8 @@ export function toast(msg) {
   t.textContent = msg; t.classList.add('is-on');
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('is-on'), 2600);
 }
+
+window.addEventListener('csra:toast', (e) => toast(e.detail));
 
 // 3) tema dia/noite
 const root = document.documentElement;
@@ -76,6 +79,7 @@ window.addEventListener('hashchange', () => {
 function openStory(id) { pushed = true; location.hash = `#/h/${id}`; }
 
 // 5) página inicial
+if (img('hero')) document.documentElement.style.setProperty('--hero-img', `url("${img('hero')}")`);
 mountHero($('#heroScene'), { onOpen: openStory });
 function refresh() {
   renderJourney();
@@ -96,6 +100,18 @@ function refresh() {
 $('#btnContinuar').addEventListener('click', (e) => { const id = e.currentTarget.dataset.id; if (id) openStory(id); });
 refresh();
 state.subscribe(() => { /* o painel é atualizado ao fechar o visualizador */ });
+
+// caderno de reflexões
+$('#cadernoCopiar').addEventListener('click', async () => {
+  const notes = state.notes();
+  const txt = STORIES.filter((s) => notes[s.id]).map((s) => { const c = s.cards.find((k) => k.w === 'reflexao'); return `${s.n}. ${s.title}\n${c ? c.pergunta : ''}\n${notes[s.id].t}`; }).join('\n\n');
+  try { await navigator.clipboard.writeText(txt); toast('Caderno copiado!'); } catch (e) { toast('Não foi possível copiar.'); }
+});
+$('#cadernoLimpar').addEventListener('click', () => {
+  if (!confirm('Apagar todas as anotações do seu caderno neste aparelho?')) return;
+  Object.keys(state.notes()).forEach((id) => state.setNote(id, ''));
+  refresh(); toast('Caderno apagado.');
+});
 
 // 6) cabeçalho: sombra ao rolar
 const hdr = $('#hdr');

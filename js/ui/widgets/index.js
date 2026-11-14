@@ -12,6 +12,7 @@ const LOADERS = {
   plano: () => import('./plano.js'),
   frase: () => import('./frase.js'),
   compartilhar: () => import('./compartilhar.js'),
+  reflexao: () => import('./reflexao.js'),
 };
 
 export async function mountWidget(name, host, card, ctx) {

@@ -2,6 +2,7 @@
 import { STORIES, BY_ID } from '../data/stories.js';
 import { state } from '../state.js';
 import { stageHTML, icon } from './art.js';
+import { img } from '../data/imagens.js';
 import { mountWidget } from './widgets/index.js';
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -55,11 +56,11 @@ export class Viewer {
   _build() {
     const s = this.story;
     this.root.innerHTML = `
-      <div class="sv__frame" role="dialog" aria-modal="true" aria-label="Parada ${s.n}: ${esc(s.title)}" tabindex="-1" data-dark="${s.theme.dark ? 1 : 0}" style="${this._theme()}">
+      <div class="sv__frame" role="dialog" aria-modal="true" aria-label="${s.n ? `Parada ${s.n}: ` : ''}${esc(s.title)}" tabindex="-1" data-dark="${s.theme.dark ? 1 : 0}" style="${this._theme()}">
         <div class="sv__top">
           <div class="sv__bars" aria-hidden="true">${Array.from({ length: this.total }, () => '<i></i>').join('')}</div>
           <div class="sv__row">
-            <div class="sv__ttl"><b>${s.n}</b><span>${esc(s.title)}</span></div>
+            <div class="sv__ttl"><b>${s.n || '⏱'}</b><span>${esc(s.title)}</span></div>
             <button class="sv__x" type="button" aria-label="Fechar história">${ICON_X}</button>
           </div>
         </div>
@@ -70,11 +71,15 @@ export class Viewer {
           <button class="sv__next" type="button"><span>Continuar</span>${ICON_R}</button>
         </div>
         <div class="sv__sr" aria-live="polite" id="svLive"></div>
-      </div>`;
+      </div>
+      <button class="sv__arrow sv__arrow--prev" type="button" tabindex="-1" aria-label="Cartão anterior">${ICON_L}</button>
+      <button class="sv__arrow sv__arrow--next" type="button" tabindex="-1" aria-label="Próximo cartão">${ICON_R}</button>`;
     const frame = $('.sv__frame', this.root);
     $('.sv__x', frame).addEventListener('click', () => this.close());
     $('.sv__prev', frame).addEventListener('click', () => this.prev());
     $('.sv__next', frame).addEventListener('click', () => this.next());
+    $('.sv__arrow--prev', this.root).addEventListener('click', () => this.prev());
+    $('.sv__arrow--next', this.root).addEventListener('click', () => this.next());
     this._gestures(frame);
     this.frame = frame;
     this.cardEl = $('#svCard', frame);
@@ -142,6 +147,8 @@ export class Viewer {
     });
     $('.sv__count', this.frame).textContent = `${i + 1} / ${this.total}`;
     const prev = $('.sv__prev', this.frame); prev.disabled = i === 0;
+    $('.sv__arrow--prev', this.root).disabled = i === 0;
+    $('.sv__arrow--next', this.root).disabled = isEnd;
     const nxt = $('.sv__next', this.frame);
     nxt.hidden = isEnd;
     state.setPos(s.id, i);
@@ -179,7 +186,8 @@ export class Viewer {
     const note = c.note ? `<p class="sv__note">${ICON_I}<span>${esc(c.note)}</span></p>` : '';
     const link = c.link ? `<a class="sv__btn sv__btn--pri sv__link" href="${esc(c.link.href)}" target="_blank" rel="noopener">${esc(c.link.txt)}</a>` : '';
     const ref = c.ref && !c.q ? `<span class="sv__ref">No livro: ${esc(c.ref)}</span>` : '';
-    return `<div class="sv__stage">${stageHTML(c.art, this.story.scene)}</div>
+    const slot = this.idx === 0 ? (img(`c-${this.story.n}-1`) || img(`parada-${this.story.n}`)) : img(`c-${this.story.n}-${this.idx + 1}`);
+    return `<div class="sv__stage">${stageHTML(c.art, this.story.scene, slot)}</div>
       <div class="sv__text">
         <h2 class="sv__big">${esc(c.big)}</h2>
         ${c.small ? `<p class="sv__small">${esc(c.small)}</p>` : ''}
@@ -190,7 +198,7 @@ export class Viewer {
   _endHTML() {
     const s = this.story;
     const nxt = STORIES[STORIES.findIndex((x) => x.id === s.id) + 1];
-    return `<div class="sv__stage" style="--stage-h:34%">${stageHTML({ items: [s.icon, 'star', 'leaf'], layout: 'three', anim: 'bounce' }, s.scene)}</div>
+    return `<div class="sv__stage">${stageHTML({ items: [s.icon, 'star', 'leaf'], layout: 'three', anim: 'bounce' }, s.scene, img(`parada-${s.n}`))}</div>
       <div class="sv__text sv__end">
         <h2 class="sv__big">Parada concluída.</h2>
         <p class="sv__take"><b>Leve isto</b>${esc(s.recap)}</p>
@@ -198,7 +206,7 @@ export class Viewer {
         <div class="sv__actions">
           ${nxt ? `<button class="sv__btn sv__btn--pri" type="button" data-act="next">Próxima: ${esc(nxt.title)}</button>` : `<button class="sv__btn sv__btn--pri" type="button" data-act="home">Voltar ao início</button>`}
           <button class="sv__btn sv__btn--ghost" type="button" data-act="again">Rever</button>
-          <button class="sv__btn sv__btn--ghost" type="button" data-act="path">Ver a jornada</button>
+          <button class="sv__btn sv__btn--ghost" type="button" data-act="path">A jornada</button>
         </div>
       </div>`;
   }

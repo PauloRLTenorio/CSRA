@@ -80,6 +80,7 @@
           <a class="btn btn--primary" id="btnComecar" href="#/h/primeiro-cardapio">Começar a jornada</a>
           <a class="btn btn--ghost" href="#jornada">Escolher uma parada</a>
         </div>
+        <p class="hero__quick"><a href="#/h/em-60-segundos">Sem tempo? Veja o livro em 60 segundos →</a></p>
         <p class="hero__meta"><span>≈ 12 min no total</span><span>sem cadastro</span><span>feito para o celular</span></p>
       </div>
       <div class="hero__scene" id="heroScene" role="group" aria-label="Uma mesa posta com cesta de frutas, pão, jarra de água, relógio, lâmpada e balança. Toque nos objetos para abrir uma história."></div>
@@ -118,8 +119,24 @@
       <p class="eyebrow">A jornada</p>
       <h2 id="jornada-titulo" class="h2">Doze paradas. Uma mesa.</h2>
       <p class="sec-lead">Cada parada leva de 1 a 2 minutos. Toque para avançar, deslize ou use as setas do teclado. Siga a ordem ou escolha o que mais chama a atenção.</p>
+      <a class="quick" href="#/h/em-60-segundos">
+        <span class="quick__ic" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#s-clock"/></svg></span>
+        <span class="quick__txt"><b>Sem tempo? O livro em 60 segundos</b><span>Seis cartões com o coração da mensagem.</span></span>
+        <span class="quick__go" aria-hidden="true">Ver agora →</span>
+      </a>
       <div class="tree" id="tree" aria-live="polite"></div>
       <ol class="path" id="path"></ol>
+    </div>
+  </section>
+
+  <!-- CADERNO (aparece só quando há anotações) -->
+  <section class="caderno" id="caderno" aria-labelledby="caderno-titulo" hidden>
+    <div class="container">
+      <p class="eyebrow">Só seu</p>
+      <h2 id="caderno-titulo" class="h2">Meu caderno</h2>
+      <p class="sec-lead">As reflexões que você escreveu ficam guardadas apenas neste aparelho. Ninguém mais vê.</p>
+      <div class="caderno__list" id="cadernoLista"></div>
+      <div class="caderno__act"><button type="button" class="btn btn--ghost" id="cadernoCopiar">Copiar tudo</button><button type="button" class="btn btn--ghost" id="cadernoLimpar">Apagar o caderno</button></div>
     </div>
   </section>
 
@@ -175,7 +192,26 @@
 
 <div id="viewer" class="sv" hidden></div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
-<noscript><p style="padding:24px;text-align:center;font:16px system-ui">Este site é interativo e precisa de JavaScript para mostrar as histórias. Para ler o livro completo: <a href="https://media4.egwwritings.org/pdf/pt_CRA%28CD%29.pdf">PDF gratuito</a>.</p></noscript>
+<noscript>
+  <section style="max-width:42rem;margin:0 auto;padding:24px;font:17px/1.55 system-ui,sans-serif">
+    <p><strong>Este site é interativo e precisa de JavaScript para mostrar as histórias.</strong> Ative o JavaScript ou leia o livro completo: <a href="https://media4.egwwritings.org/pdf/pt_CRA%28CD%29.pdf">PDF gratuito</a>.</p>
+    <h2>As doze paradas</h2>
+    <ol>
+      <li>O primeiro cardápio — frutas, grãos, nozes e verduras: o que o Criador pôs na primeira mesa.</li>
+      <li>Um corpo emprestado — se a vida é um empréstimo, como investi-la bem?</li>
+      <li>A mesa e a mente — o que pesa o estômago também embaça o pensamento.</li>
+      <li>Simples é suficiente — poucos pratos, sabores honestos, mesa generosa sem exagero.</li>
+      <li>O ritmo do dia — horários, intervalos e o descanso que o estômago também merece.</li>
+      <li>Fome ou vontade? — o apetite, a pausa de dez segundos e uma força que não vem só de nós.</li>
+      <li>A cozinha que cura — cozinhar bem é um cuidado e um serviço.</li>
+      <li>Pequenos à mesa — a primeira escola de comer é a mesa de casa.</li>
+      <li>Sem extremos — entre o descuido e o rigor existe o equilíbrio.</li>
+      <li>Remédios simples — ar, luz, água, descanso, movimento e confiança.</li>
+      <li>A mesa que abre portas — cuidar da saúde cria pontes, com ternura e sem pressão.</li>
+      <li>Seu próximo passo — um plano de sete dias, uma frase para levar e um convite.</li>
+    </ol>
+  </section>
+</noscript>
 <script type="module" src="js/main.js"></script>
 </body>
 </html>

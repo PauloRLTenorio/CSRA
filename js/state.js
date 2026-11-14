@@ -1,6 +1,6 @@
 // Estado do leitor, guardado só no navegador (localStorage). Tudo opcional: o site funciona sem isso.
 const KEY = 'csra.v1';
-let mem = { pos: {}, done: [], plan: { start: null, checks: [] }, hint: false, frases: [] };
+let mem = { pos: {}, done: [], plan: { start: null, checks: [] }, hint: false, frases: [], notes: {} };
 const subs = new Set();
 
 function load() {
@@ -38,5 +38,12 @@ export const state = {
     save();
   },
   resetPlan() { mem.plan = { start: null, checks: [] }; save(); },
-  reset() { mem = { pos: {}, done: [], plan: { start: null, checks: [] }, hint: true, frases: [] }; save(); },
+  notes() { return mem.notes || {}; },
+  setNote(id, text) {
+    mem.notes = mem.notes || {};
+    const t = String(text || '').trim();
+    if (t) mem.notes[id] = { t, d: new Date().toISOString().slice(0, 10) }; else delete mem.notes[id];
+    save();
+  },
+  reset() { mem = { pos: {}, done: [], plan: { start: null, checks: [] }, hint: true, frases: [], notes: {} }; save(); },
 };

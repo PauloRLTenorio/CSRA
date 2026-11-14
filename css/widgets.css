@@ -210,3 +210,60 @@
   .rl__presets .w-btn { min-height: 34px; }
   .rl__track { height: 100px; }
 }
+
+/* ----- REFLEXÃO ----- */
+.rq__q { margin: auto 0; padding: 4px 4px 0; font: 600 clamp(1.3rem, 5.6vw, 1.7rem)/1.25 var(--font-serif); text-wrap: balance; }
+.rq__t { width: 100%; resize: none; padding: 12px 14px; border-radius: 16px; border: 2px solid transparent; background: color-mix(in srgb, var(--st-ink) 7%, transparent); color: var(--st-ink); font: 400 1rem/1.45 var(--font-sans); }
+.rq__t::placeholder { color: color-mix(in srgb, var(--st-ink) 50%, transparent); }
+.rq__t:focus { outline: none; border-color: var(--st-accent); background: color-mix(in srgb, var(--st-ink) 4%, transparent); }
+.rq__row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.rq__hint { font-size: .78rem; opacity: .75; }
+
+/* telas baixas em pé: interações mais compactas */
+@media (max-height: 700px) and (orientation: portrait) {
+  .w { gap: 8px; }
+  .w__msg { min-height: 4.9em; font-size: .88rem; line-height: 1.38; }
+  .w__side { gap: 8px; }
+  .w-btn { min-height: 40px; }
+  .pl__chip { padding: 5px 2px 4px; }
+  .pl__chip svg { width: 26px; height: 26px; }
+  .rf__table { min-height: 78px; padding: 6px; }
+  .rf__dish { width: 40px; height: 40px; }
+  .rf__chip { padding: 3px 2px; font-size: .6rem; }
+  .rf__chip svg { width: 22px; height: 22px; }
+  .rf__chips { gap: 4px; }
+  .rl__track { height: 92px; }
+  .rl__presets .w-btn { min-height: 34px; }
+  .rm__wheel { width: min(100%, 230px); }
+  .rm__card { min-height: 0; padding: 9px 12px; }
+  .ps__orb { width: min(46cqw, 150px); }
+  .fr__card { max-height: 330px; }
+  .cp__prev { width: min(100%, 150px); }
+  .nv__sky { min-height: 100px; }
+  .ht__field { min-height: 120px; }
+  .pn__day { padding: 6px 10px 6px 6px; }
+  .pn__day b { width: 32px; height: 32px; }
+  .pn__day { grid-template-columns: 32px 1fr; }
+}
+
+@media (orientation: landscape) and (max-height: 420px) {
+  .rm__wheel { width: min(100%, 190px); }
+  .rm__card h3 { font-size: .95rem; }
+  .rm__card p { font-size: .8rem; }
+  .cn { gap: 6px; }
+  .cn__q { font-size: 1rem; }
+  .cn__opt { padding: 8px 12px; font-size: .85rem; }
+  .cn__fb { padding: 8px 12px; font-size: .84rem; }
+  .w__msg { font-size: .84rem; }
+  .rf__chip svg, .pl__chip svg { width: 22px; height: 22px; }
+  .rl__track { height: 88px; }
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  .pn__list { grid-template-columns: 1fr 1fr; gap: 5px 8px; }
+  .pn__day { padding: 5px 8px 5px 5px; grid-template-columns: 30px 1fr; gap: 8px; }
+  .pn__day b { width: 30px; height: 30px; font-size: .85rem; }
+  .pn__day span { font-size: .76rem; line-height: 1.28; }
+  .pn__top { gap: 10px; }
+  .pn__plant { width: 48px; height: 48px; }
+}

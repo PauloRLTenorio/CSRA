@@ -2,6 +2,7 @@
 import { STORIES, BY_ID } from '../data/stories.js';
 import { state } from '../state.js';
 import { icon } from './art.js';
+import { img } from '../data/imagens.js';
 
 const $ = (s) => document.querySelector(s);
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -40,7 +41,7 @@ export function renderJourney() {
     return `<li class="stop reveal${isDone ? ' is-done' : ''}" style="--st-a:${s.theme.a};--st-b:${s.theme.b}">
       <span class="stop__node" aria-hidden="true">${isDone ? '✓' : s.n}</span>
       <a class="stop__card" href="#/h/${s.id}${pos}" aria-label="Parada ${s.n}: ${esc(s.title)}. ${isDone ? 'Concluída.' : ''}">
-        <span class="stop__art">${icon(s.icon)}</span>
+        <span class="stop__art">${img(`parada-${s.n}`) ? `<img src="${img(`parada-${s.n}`)}" alt="" loading="lazy" decoding="async">` : icon(s.icon)}</span>
         <span class="stop__body">
           <span class="stop__tit">${esc(s.title)}</span>
           <span class="stop__hook">${esc(s.hook)}</span>
@@ -66,7 +67,21 @@ export function renderJourney() {
         <span class="toy__ic">${icon(t.icon)}</span><span class="toy__t">${esc(t.t)}</span><span class="toy__d">${esc(t.d)}</span></a></li>`;
     }).join('');
   }
+  renderNotebook();
   observeReveal();
+}
+
+export function renderNotebook() {
+  const sec = $('#caderno'); if (!sec) return;
+  const notes = state.notes();
+  const ids = STORIES.filter((s) => notes[s.id]).map((s) => s.id);
+  sec.hidden = ids.length === 0;
+  if (!ids.length) return;
+  $('#cadernoLista').innerHTML = ids.map((id) => {
+    const s = BY_ID[id];
+    const card = s.cards.find((c) => c.w === 'reflexao');
+    return `<article class="nota"><h3>Parada ${s.n} · ${esc(s.title)}</h3><p class="nota__q">${esc(card ? card.pergunta : '')}</p><p>${esc(notes[id].t)}</p></article>`;
+  }).join('');
 }
 
 let io;

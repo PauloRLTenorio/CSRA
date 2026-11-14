@@ -60,6 +60,7 @@ export function backdropHTML(name) {
   }
 }
 
-export function stageHTML(art, scene) {
+export function stageHTML(art, scene, imgUrl = '') {
+  if (imgUrl) return `<div class="stage stage--img"><img src="${imgUrl}" alt="" decoding="async"></div>`;
   return `<div class="stage">${backdropHTML(scene)}<div class="stage__items">${itemsHTML(art)}</div></div>`;
 }
