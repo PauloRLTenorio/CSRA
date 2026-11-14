@@ -11,6 +11,7 @@ Um site feito para quem está acostumado a conteúdo curto (stories, shorts, sta
 
 - **Página inicial interativa:** uma mesa posta; cada objeto abre uma história.
 - **Cartões em tela cheia:** toque, deslize ou use as setas do teclado; barra de progresso; "continuar de onde parou".
+- **Modo palestrante:** botão ▶ reproduz os cartões sozinhos; se o aparelho tiver voz em português, o botão de som narra em voz alta (usa a voz do próprio navegador, sem enviar nada para servidores do site).
 - **11 interações:** montar o primeiro prato, nuvem sobre a mente, quantos pratos cabem, relógio do dia, pausa de 10 segundos, horta, balança do equilíbrio, roda dos oito remédios, "o que você diria?", plano de 7 dias, carta com frase do livro (e imagem para stories).
 - **Celular primeiro** (em pé e deitado), com tema claro/escuro, sem cadastro e sem rastreamento.
 

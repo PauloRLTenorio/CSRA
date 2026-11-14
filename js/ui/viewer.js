@@ -18,6 +18,9 @@ const mixHex = (a, b, pct) => {
 const ICON_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 const ICON_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>';
 const ICON_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
+const ICON_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>';
+const ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4.6" height="14" rx="1.4"/><rect x="13.4" y="5" width="4.6" height="14" rx="1.4"/></svg>';
+const ICON_SOUND = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>';
 const ICON_I = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>';
 
 export class Viewer {
@@ -29,6 +32,11 @@ export class Viewer {
     this.cleanup = null;
     this.lastFocus = null;
     this._key = this._key.bind(this);
+    this.auto = false;
+    this.voice = false;
+    this.timer = 0;
+    this.fail = 0;
+    if ('speechSynthesis' in window) { try { speechSynthesis.addEventListener('voiceschanged', () => this._syncTools()); } catch (e) { /* ignora */ } }
   }
 
   get isOpen() { return !this.root.hidden; }
@@ -39,6 +47,9 @@ export class Viewer {
     if (!story) return;
     const reopen = this.isOpen;
     this.story = story;
+    this.closing = false;
+    this.titleBefore = this.titleBefore || document.title;
+    document.title = `${story.n ? `Parada ${story.n}: ` : ''}${story.title} · CSRA`;
     if (!reopen) this.lastFocus = document.activeElement;
     state.setLast(id);
     this.root.hidden = false;
@@ -68,7 +79,11 @@ export class Viewer {
           <div class="sv__bars" aria-hidden="true">${Array.from({ length: this.total }, () => '<i></i>').join('')}</div>
           <div class="sv__row">
             <div class="sv__ttl"><b>${s.n || '⏱'}</b><span>${esc(s.title)}</span></div>
-            <button class="sv__x" type="button" aria-label="Fechar história">${ICON_X}</button>
+            <div class="sv__tools">
+              <button class="sv__tool" type="button" data-tool="sound" aria-pressed="false" aria-label="Narração em voz alta" title="Narração em voz alta" hidden>${ICON_SOUND}</button>
+              <button class="sv__tool" type="button" data-tool="play" aria-pressed="false" aria-label="Reproduzir automaticamente" title="Reproduzir automaticamente">${ICON_PLAY}</button>
+              <button class="sv__x" type="button" aria-label="Fechar história">${ICON_X}</button>
+            </div>
           </div>
         </div>
         <div class="sv__card" id="svCard"></div>
@@ -83,6 +98,9 @@ export class Viewer {
       <button class="sv__arrow sv__arrow--next" type="button" tabindex="-1" aria-label="Próximo cartão">${ICON_R}</button>`;
     const frame = $('.sv__frame', this.root);
     $('.sv__x', frame).addEventListener('click', () => this.close());
+    $('[data-tool="play"]', frame).addEventListener('click', () => this._toggleAuto());
+    $('[data-tool="sound"]', frame).addEventListener('click', () => this._toggleVoice());
+    this._syncTools();
     $('.sv__prev', frame).addEventListener('click', () => this.prev());
     $('.sv__next', frame).addEventListener('click', () => this.next());
     $('.sv__arrow--prev', this.root).addEventListener('click', () => this.prev());
@@ -90,6 +108,7 @@ export class Viewer {
     this._gestures(frame);
     this.frame = frame;
     this.cardEl = $('#svCard', frame);
+    this._syncTools();
   }
 
   _gestures(frame) {
@@ -138,6 +157,7 @@ export class Viewer {
   _tick() { try { navigator.vibrate && navigator.vibrate(6); } catch (e) { /* sem vibração */ } }
 
   go(i, dir = 0, first = false) {
+    this._clearPlay();
     if (this.cleanup) { try { this.cleanup(); } catch (e) { /* ignora */ } this.cleanup = null; }
     this.idx = i;
     const s = this.story;
@@ -177,6 +197,8 @@ export class Viewer {
       });
     }
     if (isEnd) this._bindEnd();
+
+    this._schedule();
 
     // dica de toque na primeira vez
     if (first && i === 0 && !state.hintSeen() && !matchMedia('(pointer: fine) and (hover: hover)').matches) {
@@ -236,6 +258,74 @@ export class Viewer {
     });
   }
 
+  // ---------- modo palestrante: reprodução automática e narração ----------
+  _ptVoice() {
+    if (!('speechSynthesis' in window)) return null;
+    const vs = speechSynthesis.getVoices().filter((v) => /^pt/i.test(v.lang));
+    return vs.find((v) => /pt[-_]BR/i.test(v.lang) && /google|luciana|felipe|francisca|microsoft/i.test(v.name)) || vs.find((v) => /pt[-_]BR/i.test(v.lang)) || vs[0] || null;
+  }
+  _syncTools() {
+    if (!this.frame) return;
+    const b = $('[data-tool="sound"]', this.frame);
+    if (b) b.hidden = !this._ptVoice();
+    const p = $('[data-tool="play"]', this.frame);
+    if (p) { p.setAttribute('aria-pressed', String(this.auto)); p.innerHTML = this.auto ? ICON_PAUSE : ICON_PLAY; p.setAttribute('aria-label', this.auto ? 'Pausar reprodução' : 'Reproduzir automaticamente'); p.title = p.getAttribute('aria-label'); }
+    if (b) b.setAttribute('aria-pressed', String(this.voice));
+    this.frame.classList.toggle('is-auto', this.auto);
+  }
+  _toggleAuto() {
+    if (this.auto) { this._setAuto(false); return; }
+    this.auto = true; this._syncTools();
+    if (this.idx >= this.total - 1) { this.go(0, -1); return; }
+    const k = this.cardEl && this.cardEl.dataset.k;
+    if (k === 'widget') this.next(); else this._schedule();
+  }
+  _toggleVoice() {
+    this.voice = !this.voice; this._syncTools();
+    if (this.voice) { if (!this.auto) { this.auto = true; this._syncTools(); } this._schedule(); }
+    else { try { speechSynthesis.cancel(); } catch (e) { /* ignora */ } this._schedule(); }
+  }
+  _setAuto(on, aviso) {
+    this.auto = on; this._clearPlay(); this._syncTools();
+    if (aviso && this.hooks.toast) this.hooks.toast(aviso);
+  }
+  _clearPlay() {
+    clearTimeout(this.timer); clearTimeout(this.fail); this.timer = 0; this.fail = 0;
+    try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { /* ignora */ }
+  }
+  _speech(c) {
+    if (!c) return `Parada concluída. ${this.story.recap} ${this.story.ponte || ''}`;
+    if (c.k === 'widget') return `${c.big}. ${c.pergunta || c.small || ''}`;
+    return `${c.big} ${c.small || ''} ${c.q ? `O livro diz: ${c.q}.` : ''}`.replace(/\s+/g, ' ').trim();
+  }
+  _schedule() {
+    clearTimeout(this.timer); clearTimeout(this.fail);
+    if (!this.auto || !this.story) return;
+    const isEnd = this.idx >= this.story.cards.length;
+    const card = isEnd ? null : this.story.cards[this.idx];
+    if (card && card.k === 'widget') { this._setAuto(false, 'Pausado na interação. Toque em ▶ para seguir.'); return; }
+    const text = this._speech(card);
+    const palavras = text.split(' ').length;
+    const ms = Math.max(3400, Math.min(13000, 2400 + palavras * 330));
+    const bar = $('.sv__bars i.is-now', this.frame);
+    if (bar) bar.style.setProperty('--dur', ms + 'ms');
+    const avancar = () => { if (!this.auto) return; if (isEnd) this._setAuto(false); else this.next(); };
+    const v = this.voice ? this._ptVoice() : null;
+    if (v) {
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = v.lang; u.voice = v; u.rate = 0.98;
+      let feito = false;
+      const fim = () => { if (feito) return; feito = true; clearTimeout(this.fail); this.timer = setTimeout(avancar, 700); };
+      u.onend = fim; u.onerror = fim;
+      try { speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) { this.timer = setTimeout(avancar, ms); return; }
+      this.fail = setTimeout(fim, ms + 9000);
+    } else if (!isEnd) {
+      this.timer = setTimeout(avancar, ms);
+    } else {
+      this._setAuto(false);
+    }
+  }
+
   async _share() {
     const s = this.story;
     const data = { title: `CSRA — ${s.title}`, text: s.hook, url: `https://paulorltenorio.github.io/CSRA/#/h/${s.id}` };
@@ -246,7 +336,10 @@ export class Viewer {
   }
 
   close(scrollTo) {
-    if (!this.isOpen) return;
+    if (!this.isOpen || this.closing) return;
+    this.closing = true;
+    this.auto = false; this._clearPlay();
+    if (this.titleBefore) { document.title = this.titleBefore; this.titleBefore = ''; }
     if (this.cleanup) { try { this.cleanup(); } catch (e) { /* ignora */ } this.cleanup = null; }
     document.removeEventListener('keydown', this._key);
     this.root.classList.remove('is-open');

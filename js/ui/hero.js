@@ -35,7 +35,7 @@ function bgSVG() {
 export function mountHero(host, { onOpen }) {
   host.innerHTML = bgSVG() + HOTS.map((h, i) => `
     <button type="button" class="hot${h.float ? ' hot--float' : ''}${h.glow ? ' hot--glow' : ''}" data-story="${h.story}" ${h.edge ? `data-edge="${h.edge}"` : ''}
-      style="left:${(h.x / W * 100).toFixed(2)}%;top:${(h.y / H * 100).toFixed(2)}%;width:${(h.w / W * 100).toFixed(2)}%;--pd:${h.pd}s"
+      style="left:${(h.x / W * 100).toFixed(2)}%;top:${(h.y / H * 100).toFixed(2)}%;width:${(h.w / W * 100).toFixed(2)}%;--pd:${h.pd}s;--hi:${i}"
       aria-label="${h.label}: abrir história">
       <span class="hot__ping" aria-hidden="true"></span>
       <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#s-${h.sym}"/></svg>
