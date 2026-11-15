@@ -2,6 +2,7 @@
 // e guarda a escolha da pessoa sobre guardar o caderno na nuvem. Nada aqui roda se a pessoa só estiver lendo.
 import { NUVEM, PARADAS } from './config.js';
 import { navegadorInterno } from './navegador.js';
+import { cancelou } from './erros.js';
 
 const PREF = 'csra.nuvem'; // 'sim' = guardar o caderno na nuvem; 'nao' = só neste aparelho; ausente = ainda não decidiu
 const lerPref = () => { try { return localStorage.getItem(PREF); } catch (e) { return null; } };
@@ -98,11 +99,17 @@ export async function sair() {
 }
 
 // apaga TUDO que é da pessoa na nuvem (caderno e comentários) e a identidade dela. O que está neste aparelho fica.
+// Quem entrou com o Google confirma de novo (janela do Google): protege contra apagar por engano ou por quem pegou o aparelho.
+// Devolve { apagou, contaRemovida }.
 export async function apagarMeusDados() {
   const S = await sdk();
   await S.auth.authStateReady();
   const u = S.auth.currentUser;
-  if (!u) return false;
+  if (!u) return { apagou: false, contaRemovida: false };
+  let confirmou = !!u.isAnonymous;
+  if (!u.isAnonymous) {
+    try { await S.authM.reauthenticateWithPopup(u, new S.authM.GoogleAuthProvider()); confirmou = true; } catch (e) { if (cancelou(e)) throw e; /* outro problema: apaga os dados e só sai da conta */ }
+  }
   const { doc, writeBatch } = S.fsM;
   const lote = writeBatch(S.db);
   lote.delete(doc(S.db, 'usuarios', u.uid));
@@ -111,7 +118,9 @@ export async function apagarMeusDados() {
     lote.delete(doc(S.db, 'paradas', p, 'comentarios', `${u.uid}_${p}`));
   }
   await lote.commit();
-  try { await S.authM.deleteUser(u); } catch (e) { await S.authM.signOut(S.auth); } // Google pode pedir login recente: então só sai
+  let contaRemovida = false;
+  if (confirmou) { try { await S.authM.deleteUser(u); contaRemovida = true; } catch (e) { /* segue: só sai */ } }
+  if (!contaRemovida) await S.authM.signOut(S.auth);
   usuarioMudou(null);
-  return true;
+  return { apagou: true, contaRemovida };
 }

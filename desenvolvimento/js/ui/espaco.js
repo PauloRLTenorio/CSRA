@@ -96,7 +96,7 @@ function desenhar() {
   const ac = [];
   if (e.tipo === 'google') {
     hc = `<p><b>Conectado com o Google</b> (${esc(e.email || e.nome)}). Seus comentários e seu caderno acompanham esta conta em qualquer aparelho.</p>`;
-    ac.push(['sair', 'Sair desta conta', 'btn btn--ghost']);
+    ac.push(['sair', 'Sair desta conta', 'btn btn--ghost'], ['moderar', 'Moderar comentários', 'btn btn--ghost']);
   } else {
     hc = e.tipo === 'anonimo'
       ? '<p><b>Sem cadastro.</b> Você está usando um código anônimo, guardado neste navegador. Se limpar o navegador ou trocar de aparelho, perde o acesso ao que enviou. Entrar com o Google é opcional e resolve isso.</p>'
@@ -145,6 +145,8 @@ async function acao(b) {
       b.disabled = true;
       await N.sair(); K.desativar();
       msg('Você saiu da conta. O caderno continua neste aparelho.', 'ok', 'espMsgConta');
+    } else if (a === 'moderar') {
+      dlg.close(); location.hash = '#/admin';
     } else if (a === 'copiar') {
       const url = location.href.split('#')[0];
       try { await navigator.clipboard.writeText(url); msg('Link copiado! Cole no Chrome ou no Safari.', 'ok', 'espMsgConta'); } catch (err) { msg(url, '', 'espMsgConta'); }
@@ -167,9 +169,9 @@ async function acao(b) {
       }
       confirmando = false; b.disabled = true; b.textContent = 'Apagando…';
       K.desativar();
-      const apagou = await N.apagarMeusDados();
+      const r = await N.apagarMeusDados();
       C.limparCache();
-      msg(apagou ? 'Pronto. Apagamos seu caderno e seus comentários da nuvem. O que está neste aparelho continua aqui.' : 'Não havia nada seu na nuvem.', 'ok', 'espMsg2');
+      msg(!r.apagou ? 'Não havia nada seu na nuvem.' : r.contaRemovida ? 'Pronto. Apagamos seu caderno, seus comentários e a sua conta. O que está neste aparelho continua aqui.' : 'Pronto. Apagamos seu caderno e seus comentários da nuvem. O registro da conta Google pode continuar no Firebase: para removê-lo, peça a quem mantém o site. O que está neste aparelho continua aqui.', 'ok', 'espMsg2');
     }
   } catch (err) {
     const t = E.mensagemDeErro(err);

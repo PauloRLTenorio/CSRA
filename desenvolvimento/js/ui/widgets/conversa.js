@@ -40,7 +40,7 @@ export function mount(host, card, ctx) {
       <p class="cv__txt">${esc(i.texto)}</p></li>`).join('')}</ul>`;
   }
 
-  const aviso = (nuvemTipo) => `<p class="cv__aviso">Sem cadastro: o comentário fica ligado a um código anônimo deste navegador, não ao seu nome.${nuvemTipo === 'anonimo' ? ' Para não perder o acesso a ele em outro aparelho, <button type="button" class="cv__link" data-espaco>entre com o Google</button> (opcional).' : ' <button type="button" class="cv__link" data-espaco>Como funciona</button>'}</p>`;
+  const aviso = (nuvemTipo) => `<p class="cv__aviso">Sem cadastro: ligado a um código anônimo deste navegador.${nuvemTipo === 'anonimo' ? ' Para não perder o acesso em outro aparelho, <button type="button" class="cv__link" data-espaco>entre com o Google</button> (opcional).' : ' <button type="button" class="cv__link" data-espaco>Como funciona</button>'}</p>`;
 
   function desenharForm(rasc) {
     rodape.innerHTML = `<form class="cv__form" id="cvF" novalidate>
