@@ -33,6 +33,13 @@ function montar() {
     <header class="espaco__cab"><h2 id="esp-t">Seu espaço</h2><button type="button" class="espaco__x" data-fechar aria-label="Fechar">${'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'}</button></header>
     <p class="espaco__sub">Aqui você decide o que fica guardado e onde. Para ler e aprender, você não precisa de nada disto: nem cadastro, nem login.</p>
 
+    <section class="espaco__sec" aria-labelledby="esp-a">
+      <h3 id="esp-a">Sua conta</h3>
+      <div id="espConta" aria-live="polite"></div>
+      <div class="espaco__acoes" id="espContaAcoes"></div>
+      <p class="espaco__msg" id="espMsgConta" role="status" hidden></p>
+    </section>
+
     <section class="espaco__sec" aria-labelledby="esp-c">
       <h3 id="esp-c">Seu caderno</h3>
       <div id="espStatus" aria-live="polite"></div>
@@ -83,26 +90,32 @@ function desenhar() {
   if (!dlg || !M) return;
   const { N, K } = M;
   const e = N.estado(), c = N.consentimento(), s = K.statusSync(), interno = N.interno();
+
+  // ----- conta -----
+  let hc = '';
+  const ac = [];
+  if (e.tipo === 'google') {
+    hc = `<p><b>Conectado com o Google</b> (${esc(e.email || e.nome)}). Seus comentários e seu caderno acompanham esta conta em qualquer aparelho.</p>`;
+    ac.push(['sair', 'Sair desta conta', 'btn btn--ghost']);
+  } else {
+    hc = e.tipo === 'anonimo'
+      ? '<p><b>Sem cadastro.</b> Você está usando um código anônimo, guardado neste navegador. Se limpar o navegador ou trocar de aparelho, perde o acesso ao que enviou. Entrar com o Google é opcional e resolve isso.</p>'
+      : '<p><b>Você não precisa de conta.</b> Se quiser ver seus comentários e seu caderno em qualquer aparelho, entre com o Google (opcional).</p>';
+    if (interno) hc += `<p class="espaco__alerta">Você abriu o site dentro do <b>${esc(interno)}</b>. O Google não deixa entrar com a conta por aqui. Para entrar, abra este endereço no <b>Chrome</b> ou no <b>Safari</b>.</p>`;
+    ac.push(interno ? ['copiar', 'Copiar o link do site', 'btn btn--ghost'] : ['google', 'Entrar com o Google', 'btn btn--primary']);
+  }
+  $('#espConta', dlg).innerHTML = hc;
+  $('#espContaAcoes', dlg).innerHTML = ac.map(([a, t, k]) => `<button type="button" class="${k}" data-acao="${a}">${t}</button>`).join('');
+
+  // ----- caderno -----
   let h = '';
   const acoes = [];
   if (c !== 'sim') {
     h = '<p><b>Só neste aparelho.</b> Suas reflexões, o plano de 7 dias e o progresso ficam guardados aqui. Se você limpar o navegador ou trocar de aparelho, eles se perdem.</p>';
     acoes.push(['guardar', 'Guardar na nuvem', 'btn btn--primary']);
-  } else if (e.tipo === 'google') {
-    h = `<p><b>Guardado na nuvem, na conta ${esc(e.email || e.nome || 'Google')}.</b> Em qualquer aparelho, ao entrar com o mesmo Google, você vê tudo. Só você enxerga o seu caderno.</p><p class="espaco__sync">${esc(quandoSync(s))}</p>`;
-    acoes.push(['sair', 'Sair desta conta', 'btn btn--ghost'], ['parar', 'Parar de guardar na nuvem', 'btn btn--ghost']);
   } else {
-    h = `<p><b>Guardado na nuvem, sem cadastro.</b> Só você vê. Neste navegador tudo continua aparecendo; em outro aparelho, só se você entrar com o Google.</p><p class="espaco__sync">${esc(quandoSync(s))}</p>`;
-    if (!interno) acoes.push(['google', 'Entrar com o Google', 'btn btn--primary']);
+    h = `<p><b>Guardado na nuvem${e.tipo === 'google' ? `, na conta ${esc(e.email || e.nome || 'Google')}` : ', sem cadastro'}.</b> Só você vê. ${e.tipo === 'google' ? 'Em qualquer aparelho, ao entrar com o mesmo Google, você vê tudo.' : 'Neste navegador tudo continua aparecendo; em outro aparelho, só se você entrar com o Google.'}</p><p class="espaco__sync">${esc(quandoSync(s))}</p>`;
     acoes.push(['parar', 'Parar de guardar na nuvem', 'btn btn--ghost']);
-  }
-  if (c !== 'sim' && e.tipo === 'google') {
-    h += `<p>Você está conectado com o Google (${esc(e.email || e.nome)}).</p>`;
-    acoes.push(['sair', 'Sair desta conta', 'btn btn--ghost']);
-  }
-  if (interno && e.tipo !== 'google') {
-    h += `<p class="espaco__alerta">Você abriu o site dentro do <b>${esc(interno)}</b>. O Google não deixa entrar com a conta por aqui. Para entrar, abra este endereço no <b>Chrome</b> ou no <b>Safari</b>.</p>`;
-    acoes.push(['copiar', 'Copiar o link do site', 'btn btn--ghost']);
   }
   $('#espStatus', dlg).innerHTML = h;
   $('#espAcoes', dlg).innerHTML = acoes.map(([a, t, k]) => `<button type="button" class="${k}" data-acao="${a}">${t}</button>`).join('');
@@ -124,17 +137,17 @@ async function acao(b) {
     } else if (a === 'parar') {
       K.desativar(); msg('Certo. O caderno volta a ficar só neste aparelho. O que já foi enviado continua na nuvem até você apagar.', 'ok');
     } else if (a === 'google') {
-      b.disabled = true; b.textContent = 'Abrindo o Google…'; msg('');
+      b.disabled = true; b.textContent = 'Abrindo o Google…'; msg('', '', 'espMsgConta');
       const r = await N.entrarComGoogle();
       if (N.consentimento() === 'sim') K.agendar(300);
-      msg(r.trocou ? 'Você entrou numa conta que já existia. O caderno deste aparelho foi combinado com o dela.' : 'Pronto! Agora você está conectado com o Google.', 'ok');
+      msg(r.trocou ? 'Você entrou numa conta que já existia. O caderno deste aparelho foi combinado com o dela.' : 'Pronto! Agora você está conectado com o Google.', 'ok', 'espMsgConta');
     } else if (a === 'sair') {
       b.disabled = true;
       await N.sair(); K.desativar();
-      msg('Você saiu da conta. O caderno continua neste aparelho.', 'ok');
+      msg('Você saiu da conta. O caderno continua neste aparelho.', 'ok', 'espMsgConta');
     } else if (a === 'copiar') {
       const url = location.href.split('#')[0];
-      try { await navigator.clipboard.writeText(url); msg('Link copiado! Cole no Chrome ou no Safari.', 'ok'); } catch (err) { msg(url, ''); }
+      try { await navigator.clipboard.writeText(url); msg('Link copiado! Cole no Chrome ou no Safari.', 'ok', 'espMsgConta'); } catch (err) { msg(url, '', 'espMsgConta'); }
     } else if (a === 'baixar') {
       b.disabled = true; b.textContent = 'Preparando…';
       const dados = { site: 'CSRA', ambiente: NUVEM.ambiente, exportadoEm: new Date().toISOString(), caderno: state.snapshot(), comentarios: [] };
@@ -160,7 +173,7 @@ async function acao(b) {
     }
   } catch (err) {
     const t = E.mensagemDeErro(err);
-    if (t) msg(t, 'erro', a === 'apagar' || a === 'baixar' ? 'espMsg2' : 'espMsg');
+    if (t) msg(t, 'erro', a === 'apagar' || a === 'baixar' ? 'espMsg2' : (a === 'google' || a === 'sair' || a === 'copiar') ? 'espMsgConta' : 'espMsg');
   } finally {
     if (!manter) { livre(); desenhar(); }
   }
@@ -170,7 +183,7 @@ export async function abrir() {
   await modulos();
   if (!dlg) montar();
   if (dlg.open) return;
-  msg(''); msg('', '', 'espMsg2');
+  msg(''); msg('', '', 'espMsg2'); msg('', '', 'espMsgConta');
   desenhar();
   tirar.push(M.N.assinar(desenhar));
   const aoSync = () => desenhar();

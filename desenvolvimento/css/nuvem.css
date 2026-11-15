@@ -66,6 +66,7 @@ body { padding-top: var(--devbar-h); }
 .nv-convite__t { margin: 0; font-size: .85rem; line-height: 1.4; }
 .nv-convite__a { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .nv-convite .w-btn { min-height: 40px; padding: 0 14px; font-size: .82rem; }
+.nv-convite .cv__link { font-size: .82rem; }
 
 /* ----- diálogos: Seu espaço e moderação ----- */
 .espaco { border: 0; padding: 0; width: min(580px, calc(100vw - 20px)); max-height: min(90dvh, 780px); border-radius: 26px; background: var(--card); color: var(--ink); box-shadow: var(--shadow-2); overflow: hidden; }
