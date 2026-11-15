@@ -1,0 +1,111 @@
+rules_version = '2';
+
+// Regras de segurança do Firestore do projeto CSRA (versão em desenvolvimento).
+// Estas regras são a única proteção dos dados: a configuração web do Firebase é pública por desenho.
+// Para publicar: Firebase Console > Firestore Database > Regras > colar > Publicar (ou com o comando: firebase deploy --only firestore:rules).
+//
+// Coleções:
+//   usuarios/{uid}                           caderno e progresso de cada pessoa. Só ela lê e escreve.
+//   comentarios_pendentes/{uid}_{parada}     comentário enviado, aguardando aprovação. O dono vê e apaga; o admin lista.
+//   paradas/{parada}/comentarios/{uid}_{parada}   comentário aprovado (leitura pública). Só o admin cria; dono ou admin apaga.
+//   config/admin                             { uids: [...], emails: [...] }, criado à mão no console. Nunca é lido pelo site.
+//
+// Um comentário por pessoa por parada: o id é "<uid>_<parada>".
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function entrou() { return request.auth != null; }
+
+    function adminDoc() { return get(/databases/$(database)/documents/config/admin).data; }
+
+    // administrador: o uid ou o e-mail (verificado) está na lista de config/admin
+    function ehAdmin() {
+      return entrou()
+        && exists(/databases/$(database)/documents/config/admin)
+        && (request.auth.uid in adminDoc().get('uids', [])
+            || (request.auth.token.get('email_verified', false) == true
+                && request.auth.token.get('email', '') in adminDoc().get('emails', [])));
+    }
+
+    // o dono de um comentário é quem tem o uid no começo do id (não depende de ler o documento)
+    function donoDoId(id) { return entrou() && id.split('_')[0] == request.auth.uid; }
+
+    function paradaValida(p) {
+      return p in ['primeiro-cardapio', 'corpo-emprestado', 'mesa-e-mente', 'simples-e-suficiente', 'ritmo-do-dia',
+                   'fome-ou-vontade', 'cozinha-que-cura', 'pequenos-a-mesa', 'sem-extremos', 'remedios-simples',
+                   'mesa-que-abre-portas', 'proximo-passo'];
+    }
+
+    function textoOk(t, min, max) { return t is string && t.size() >= min && t.size() <= max; }
+
+    // sem endereços, e-mails ou @ (reduz spam; a moderação cuida do resto)
+    function semLinks(t) {
+      return !t.lower().matches('[\\s\\S]*(https?:|www\\.|@|[a-z0-9-]+\\.(com|net|org|br|io|me|xyz|info|app|site|link)\\b)[\\s\\S]*');
+    }
+
+    function pendenteOk(id) {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['uid', 'parada', 'nome', 'texto', 'criadoEm'])
+        && d.keys().hasAll(['uid', 'parada', 'texto', 'criadoEm'])
+        && d.uid == request.auth.uid
+        && paradaValida(d.parada)
+        && id == d.uid + '_' + d.parada
+        && textoOk(d.texto, 3, 600)
+        && semLinks(d.texto)
+        && (!('nome' in d) || (d.nome is string && d.nome.size() <= 40 && semLinks(d.nome)))
+        && d.criadoEm == request.time;
+    }
+
+    function aprovadoOk(parada, id) {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['uid', 'nome', 'texto', 'criadoEm', 'aprovadoEm'])
+        && d.keys().hasAll(['uid', 'texto', 'criadoEm', 'aprovadoEm'])
+        && paradaValida(parada)
+        && id == d.uid + '_' + parada
+        && textoOk(d.texto, 3, 600)
+        && d.criadoEm is timestamp
+        && (!('nome' in d) || (d.nome is string && d.nome.size() <= 40))
+        && d.aprovadoEm == request.time;
+    }
+
+    function usuarioOk() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['v', 'epoch', 'pos', 'done', 'plan', 'notes', 'last', 'frases', 'atualizadoEm'])
+        && d.keys().hasAll(['v', 'atualizadoEm'])
+        && d.v == 1
+        && d.atualizadoEm == request.time
+        && (!('epoch' in d) || d.epoch is string)
+        && (!('pos' in d) || (d.pos is map && d.pos.size() <= 20))
+        && (!('done' in d) || (d.done is list && d.done.size() <= 20))
+        && (!('plan' in d) || d.plan is map)
+        && (!('notes' in d) || (d.notes is map && d.notes.size() <= 20))
+        && (!('last' in d) || d.last == null || d.last is string)
+        && (!('frases' in d) || (d.frases is list && d.frases.size() <= 100));
+    }
+
+    match /usuarios/{uid} {
+      allow get: if entrou() && request.auth.uid == uid;
+      allow create, update: if entrou() && request.auth.uid == uid && usuarioOk();
+      allow delete: if entrou() && request.auth.uid == uid;
+    }
+
+    match /comentarios_pendentes/{id} {
+      allow get: if donoDoId(id) || ehAdmin();
+      allow list: if ehAdmin();
+      allow create, update: if entrou() && pendenteOk(id);
+      allow delete: if donoDoId(id) || ehAdmin();
+    }
+
+    match /paradas/{parada}/comentarios/{id} {
+      allow get: if true;
+      allow list: if request.query.limit <= 50;
+      allow create, update: if ehAdmin() && aprovadoOk(parada, id);
+      allow delete: if donoDoId(id) || ehAdmin();
+    }
+
+    // só pelo console
+    match /config/{doc} {
+      allow read, write: if false;
+    }
+  }
+}
