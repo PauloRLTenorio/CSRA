@@ -114,7 +114,7 @@ Para ler no livro: Cap. 14, “Arte de cozinhar saudável” (pp. 216–229).
 |---|---|---|---|
 | 1 | Quem cozinha, cuida. | Cap. 14, § 369 |  |
 | 2 | Saudável precisa ser gostoso. | Cap. 14, § 390 |  |
-| 3 | Não é a mudança que falha. É a panela. | Cap. 14, §§ 374 e 379 | “reforma de saúde é tornada deforma-saúde” |
+| 3 | Não é a mudança que falha. É a panela. | Cap. 14, §§ 374, 379 e 393 | “reforma de saúde é tornada deforma-saúde” |
 | 4 | Cozinhar é uma arte essencial. | Cap. 14, § 393 | “A ciência culinária, porém, não é de pequena importância.” |
 | 5 | O pão é o bordão da vida. | Cap. 18, §§ 493–495 | “O pão é o verdadeiro bordão da vida” |
 | 6 | Aprenda — homens também. | Cap. 14, § 374 | “Aprendam a cozinhar.” |

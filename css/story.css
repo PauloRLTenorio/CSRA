@@ -75,7 +75,7 @@
 .sv__note { display: flex; gap: 8px; font-size: .84rem; line-height: 1.4; margin: 0; padding: 10px 12px; border-radius: 12px; background: color-mix(in srgb, var(--st-ink) 7%, transparent); }
 .sv__note svg { width: 18px; height: 18px; flex: none; margin-top: 1px; }
 .sv__ref { margin-top: auto; align-self: flex-start; font: 700 .72rem/1 var(--font-sans); letter-spacing: .06em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; background: color-mix(in srgb, var(--st-ink) 10%, transparent); opacity: .9; }
-.sv__link { align-self: flex-start; }
+.sv__links { display: flex; flex-wrap: wrap; gap: 8px 10px; align-self: flex-start; }
 
 /* entrada do cartão */
 .sv__card.is-next .sv__text > * { animation: txt-in .5s var(--ease) both; }
@@ -168,6 +168,7 @@
 .sv__ponte { margin: 0; font: 500 .98rem/1.4 var(--font-serif); opacity: .92; padding-left: 12px; border-left: 3px solid var(--st-accent); }
 .sv__read { font-size: .88rem; line-height: 1.45; margin: 0; }
 .sv__read a { font-weight: 700; text-underline-offset: 3px; white-space: nowrap; }
+.sv__read a.egw-ref { white-space: normal; } /* títulos longos de capítulo podem quebrar de linha */
 .sv__read b { font-weight: 700; }
 .sv__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 2px; }
 .sv__btn { min-height: 48px; padding: 0 20px; border-radius: 999px; font: 700 .95rem var(--font-sans); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; transition: transform .2s var(--ease); }
@@ -208,7 +209,8 @@
   .sv__card[data-k="widget"] .sv__small { font-size: .86rem; }
   .sv__wdg { padding: 12px 24px 62px; border-radius: 26px 26px 0 0; margin: 0; box-shadow: 0 -10px 30px rgba(0, 0, 0, .1); }
   .sv__frame[data-k="widget"] .sv__nav { left: 0; right: 0; width: auto; background: var(--st-sheet); justify-content: flex-end; gap: 16px; }
-  .sv__ref { display: none; }
+  /* a referência ao livro (um link) continua à mão no celular deitado, só que sem a pílula, para não tomar altura */
+  .sv__ref { margin-top: 2px; padding: 0; background: none; font-size: .62rem; letter-spacing: .05em; }
 }
 /* celulares baixos em pé (ex.: 360x640) e janelas de computador baixas (moldura de até ~700px): tudo um pouco mais compacto para nada ficar escondido */
 @media (max-height: 700px) and (orientation: portrait), (min-width: 640px) and (min-height: 660px) and (max-height: 750px) {
@@ -253,6 +255,8 @@
   .sv__end .sv__big { font-size: 1.05rem; }
   .sv__take { padding: 6px 10px; font-size: .84rem; }
   .sv__read { font-size: .7rem; }
+  .sv__read a.egw-ref { font-weight: 500; }
+  .sv__read a.egw-ref::after { display: none; } /* o sublinhado basta: aqui cada linha conta */
   .sv__btn { min-height: 34px; padding: 0 12px; font-size: .76rem; }
   .sv__nav { padding: 4px 18px 8px; }
   .sv__prev { width: 40px; height: 40px; }

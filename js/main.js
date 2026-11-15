@@ -130,6 +130,8 @@ $('#btnCompartilhar').addEventListener('click', async () => {
 });
 
 try { mountLeve({ toast }); } catch (e) { /* bloco opcional: nunca pode derrubar o resto */ }
+// "Cap. 4, § 111" vira link para o trecho exato no site do livro. Módulo opcional: se falhar, o site funciona igual, só sem os links.
+import('./ui/refs.js').then((m) => m.observarRefs(document.body)).catch(() => { /* sem links */ });
 observeReveal();
 sync();
 

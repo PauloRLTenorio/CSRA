@@ -3,6 +3,8 @@
 // Cartões: say (afirmação), widget (interação). O cartão final ("end") é acrescentado automaticamente pelo visualizador.
 // art: { items:[símbolos], layout:'one|two|three|four|five|orbit|row', anim:'float|sway|pulse|bounce' }
 
+import { LIVRO_SITE, LIVRO_PDF } from './livro.js';
+
 const say = (big, small, art, ref, extra = {}) => ({ k: 'say', big, small, art, ref, ...extra });
 const widget = (w, big, small, extra = {}) => ({ k: 'widget', w, big, small, ...extra });
 
@@ -144,7 +146,7 @@ export const STORIES = [
     cards: [
       say('Quem cozinha, cuida.', 'O livro tem um carinho raro pela cozinheira: quem prepara bem a comida sustenta o corpo, o cérebro e o humor da casa inteira.', { items: ['pot'], layout: 'one', anim: 'sway' }, 'Cap. 14, § 369'),
       say('Saudável precisa ser gostoso.', 'Se a comida é sem sabor, o corpo aproveita menos e a pessoa desiste. O livro pede alimento escolhido com cuidado e preparado com inteligência e habilidade.', { items: ['bowl', 'lemon'], layout: 'two', anim: 'float' }, 'Cap. 14, § 390'),
-      say('Não é a mudança que falha. É a panela.', 'A autora visitou muitas mesas e concluiu: quem desanima da reforma costuma estar sofrendo com comida mal preparada, não com a ideia em si.', { items: ['pot', 'leaf'], layout: 'two', anim: 'bounce' }, 'Cap. 14, §§ 374 e 379', { q: 'reforma de saúde é tornada deforma-saúde' }),
+      say('Não é a mudança que falha. É a panela.', 'A autora visitou muitas mesas e concluiu: quem desanima da reforma costuma estar sofrendo com comida mal preparada, não com a ideia em si.', { items: ['pot', 'leaf'], layout: 'two', anim: 'bounce' }, 'Cap. 14, §§ 374, 379 e 393', { q: 'reforma de saúde é tornada deforma-saúde' }),
       say('Cozinhar é uma arte essencial.', 'O livro vai longe: põe as aulas de cozinha antes das de piano. Não despreza a música; só lembra o que sustenta a vida de todos os dias.', { items: ['pot', 'book'], layout: 'two', anim: 'float' }, 'Cap. 14, § 393', { q: 'A ciência culinária, porém, não é de pequena importância.' }),
       say('O pão é o bordão da vida.', 'O livro dá ao pão um lugar de honra: bem assado, leve, sem azedo e de farinha integral. Aprender a fazer um bom pão é uma das lições de cozinha que ele mais insiste em ensinar.', { items: ['bread', 'wheat'], layout: 'two', anim: 'float' }, 'Cap. 18, §§ 493–495', { q: 'O pão é o verdadeiro bordão da vida' }),
       say('Aprenda — homens também.', 'O livro convoca homens e mulheres a aprender a cozinhar: um conhecimento que serve em casa, em viagem e na casa dos outros.', { items: ['adult', 'pot'], layout: 'two', anim: 'sway' }, 'Cap. 14, § 374', { q: 'Aprendam a cozinhar.' }),
@@ -248,7 +250,7 @@ export const STORIES = [
       widget('plano', 'Plano de 7 dias', 'Um gesto pequeno por dia. Marque o que fizer.'),
       widget('frase', 'Leve uma frase', 'Vire a carta e guarde uma frase curta do livro.'),
       widget('compartilhar', 'Convide alguém', 'Mostre a um amigo, sem explicar demais.'),
-      say('Para ler tudo no livro.', 'O livro completo é gratuito em PDF. Cada parada indicou os capítulos para você ir direto ao ponto.', { items: ['book'], layout: 'one', anim: 'sway' }, null, { link: { href: 'https://media4.egwwritings.org/pdf/pt_CRA%28CD%29.pdf', txt: 'Abrir o PDF gratuito' } }),
+      say('Para ler tudo no livro.', 'O livro completo é gratuito, no site oficial ou em PDF. Cada parada indicou os capítulos para você ir direto ao ponto.', { items: ['book'], layout: 'one', anim: 'sway' }, null, { links: [{ href: LIVRO_SITE, txt: 'Ler no site' }, { href: LIVRO_PDF, txt: 'Baixar o PDF' }] }),
     ],
   },
 ];

@@ -1,5 +1,5 @@
 // GERADO por scripts/gerar_sw.mjs — não edite à mão.
-const CACHE = 'csra-b84fdcc29a';
+const CACHE = 'csra-7c8e282e0c';
 const ARQUIVOS = [
  "./",
  "assets/apple-touch-icon.png",
@@ -20,7 +20,9 @@ const ARQUIVOS = [
  "css/tokens.css",
  "css/widgets.css",
  "index.html",
+ "js/data/egw.js",
  "js/data/imagens.js",
+ "js/data/livro.js",
  "js/data/stories.js",
  "js/main.js",
  "js/state.js",
@@ -29,6 +31,7 @@ const ARQUIVOS = [
  "js/ui/journey.js",
  "js/ui/leve.js",
  "js/ui/qr.js",
+ "js/ui/refs.js",
  "js/ui/sprite.js",
  "js/ui/viewer.js",
  "js/ui/widgets/balanca.js",

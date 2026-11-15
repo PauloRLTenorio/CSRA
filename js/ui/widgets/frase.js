@@ -12,13 +12,16 @@ export function mount(host, card, ctx) {
     </div></div>
     <div class="w__side"><div class="w-row" style="justify-content:center"><button type="button" class="w-btn w-btn--pri" id="frN">Outra frase</button><button type="button" class="w-btn" id="frS">Compartilhar</button></div></div></div>`;
   const c = $('#frC', host), back = $('#frB', host);
+  // virada, a carta deixa de ser botão: o verso tem um link (a referência ao livro) e link dentro de botão não vale
+  const papel = () => { c.setAttribute('role', flipped ? 'group' : 'button'); c.setAttribute('aria-label', flipped ? 'Frase do livro' : 'Virar a carta para ver uma frase do livro'); };
   const show = () => {
     cur = pick();
-    back.innerHTML = `<p class="fr__q">“${esc(cur.q)}”</p><p class="fr__ref">${esc(cur.ref)}</p><p class="fr__g">${esc(cur.glosa)}</p>`;
+    // data-q: o link do livro (js/ui/refs.js) destaca esta frase na página do site oficial
+    back.innerHTML = `<p class="fr__q">“${esc(cur.q)}”</p><p class="fr__ref" data-q="${esc(cur.q)}">${esc(cur.ref)}</p><p class="fr__g">${esc(cur.glosa)}</p>`;
   };
   const flip = () => {
-    if (!flipped) { show(); flipped = true; c.classList.add('is-flip'); }
-    else { c.classList.remove('is-flip'); flipped = false; setTimeout(() => { show(); flipped = true; c.classList.add('is-flip'); }, 420); }
+    if (!flipped) { show(); flipped = true; papel(); c.classList.add('is-flip'); }
+    else { c.classList.remove('is-flip'); flipped = false; papel(); setTimeout(() => { show(); flipped = true; papel(); c.classList.add('is-flip'); }, 420); }
   };
   c.addEventListener('click', () => { if (!flipped) flip(); });
   c.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (!flipped) flip(); } });

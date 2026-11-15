@@ -26,6 +26,7 @@ Dica: o navegador guarda arquivos em cache; recarregue com Cmd+Shift+R depois de
 | `css/*.css` | Visual: `tokens.css` (cores e tamanhos), `home.css`, `story.css`, `widgets.css` |
 | `js/ui/qr.js` · `js/ui/leve.js` | Gerador de QR Code (puro, sem biblioteca) e o bloco "Leve com você" (tela cheia, copiar link) |
 | `assets/qr.svg` · `assets/qr.png` | QR Code do site, para slides e impressão. Gerado por `node scripts/gerar_qr.mjs` |
+| `js/ui/refs.js` · `js/data/egw.js` · `js/data/livro.js` | Links "conferir no livro": cada "Cap. 4, § 111" abre o trecho exato no site oficial. `egw.js` é gerado (veja "Links para o livro") |
 
 ## Editar ou criar um cartão
 
@@ -82,6 +83,22 @@ O cartão final de cada parada ("Parada concluída") é criado sozinho, com o re
 3. Atualize a tabela de fontes: `node scripts/gerar_fontes.mjs` (gera `docs/FONTES.md`).
 
 **Não suba o PDF nem o texto extraído para o repositório.** O `.gitignore` já ignora `*.pdf` e a pasta `_trabalho/`.
+
+## Links para o livro ("Cap. 4, § 111" abre o trecho exato)
+
+Toda referência escrita como `Cap. 4, § 111`, `Cap. 4, §§ 144–146`, `Cap. 19, §§ 531 e 544`, `Cap. 5, “Título da parte”`, `Caps. 12 e 13` ou `Apêndice 1, § 25` vira **link automaticamente** (`js/ui/refs.js`), em qualquer texto do site: cartões, mensagens das interações, "Para ler no livro". O link abre o parágrafo na versão para celular do site oficial, no formato `https://m.egwwritings.org/pt/book/11093.<página>#<parágrafo>`. Quando a referência acompanha uma citação literal (`q`), o link também **destaca a frase** na página do livro (navegadores atuais; nos antigos, só leva ao parágrafo).
+
+Para isso, `js/data/egw.js` guarda, para cada passagem numerada (1–822 e Apêndice 1), o ID do parágrafo no site oficial. **Ali só há números**, mais as palavras das citações curtas que o site já mostra (usadas para destacar a frase). O arquivo é gerado, não edite à mão:
+
+```bash
+python3 scripts/baixar_egw.py        # baixa o livro do site oficial para _trabalho/egw/ (≈ 15 min: 316 páginas, 1 pedido a cada 0,8 s)
+python3 scripts/gerar_links_egw.py   # gera js/data/egw.js e CONFERE todas as referências do site
+node scripts/gerar_sw.mjs
+```
+
+O gerador **falha** se uma referência apontar para o capítulo errado, para uma passagem que não existe ou se uma citação literal não estiver na passagem indicada. Rode-o sempre que mudar referências ou citações. Se só escrever referências novas a passagens que já existem (1–822), nada precisa ser regerado: o link aparece sozinho (só o destaque da frase de uma citação nova exige rodar o gerador).
+
+Os textos do livro baixados ficam em `_trabalho/egw/` (ignorado pelo git): não os publique. O link geral do livro está em `js/data/livro.js` (`LIVRO_SITE`, `LIVRO_PDF`).
 
 ## QR Code do site
 

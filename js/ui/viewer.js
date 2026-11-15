@@ -5,7 +5,7 @@ import { stageHTML, icon } from './art.js';
 import { img } from '../data/imagens.js';
 import { mountWidget } from './widgets/index.js';
 
-const PDF = 'https://media4.egwwritings.org/pdf/pt_CRA%28CD%29.pdf';
+import { LIVRO_PDF as PDF } from '../data/livro.js';
 const $ = (s, r = document) => r.querySelector(s);
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -106,6 +106,8 @@ export class Viewer {
     $('.sv__arrow--prev', this.root).addEventListener('click', () => this.prev());
     $('.sv__arrow--next', this.root).addEventListener('click', () => this.next());
     this._gestures(frame);
+    // ao sair para conferir um trecho no site do livro, a reprodução automática para (senão os cartões passariam sem você)
+    frame.addEventListener('click', (e) => { if (this.auto && e.target.closest('a[data-egw]')) this._setAuto(false, 'Reprodução pausada.'); });
     this.frame = frame;
     this.cardEl = $('#svCard', frame);
     this._syncTools();
@@ -212,9 +214,11 @@ export class Viewer {
     if (c.k === 'widget') {
       return `<div class="sv__text"><h2 class="sv__big">${esc(c.big)}</h2><p class="sv__small">${esc(c.small)}</p></div><div class="sv__wdg" data-nonav></div>`;
     }
-    const q = c.q ? `<blockquote class="sv__q">“${esc(c.q)}”<cite>${esc(c.ref || '')}</cite></blockquote>` : '';
+    // data-q: junto da referência, o link do livro (js/ui/refs.js) também destaca esta frase na página do site oficial
+    const q = c.q ? `<blockquote class="sv__q" data-q="${esc(c.q)}">“${esc(c.q)}”<cite>${esc(c.ref || '')}</cite></blockquote>` : '';
     const note = c.note ? `<p class="sv__note">${ICON_I}<span>${esc(c.note)}</span></p>` : '';
-    const link = c.link ? `<a class="sv__btn sv__btn--pri sv__link" href="${esc(c.link.href)}" target="_blank" rel="noopener">${esc(c.link.txt)}</a>` : '';
+    const links = c.links || (c.link ? [c.link] : []);
+    const link = links.length ? `<div class="sv__links">${links.map((l, i) => `<a class="sv__btn ${i ? 'sv__btn--ghost' : 'sv__btn--pri'}" href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.txt)}</a>`).join('')}</div>` : '';
     const ref = c.ref && !c.q ? `<span class="sv__ref">No livro: ${esc(c.ref)}</span>` : '';
     const slot = this.idx === 0 ? (img(`c-${this.story.n}-1`) || img(`parada-${this.story.n}`)) : img(`c-${this.story.n}-${this.idx + 1}`);
     return `<div class="sv__stage">${stageHTML(c.art, this.story.scene, slot)}</div>
