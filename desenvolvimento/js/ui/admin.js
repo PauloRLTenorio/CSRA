@@ -47,17 +47,19 @@ async function desenhar() {
   c.innerHTML = '<p class="cv__estado cv__estado--carrega">Verificando…</p>';
   let S, u;
   try { S = await N.sdk(); u = await N.usuarioAtual(); } catch (e) { c.innerHTML = `<p class="espaco__alerta">${esc(E.mensagemDeErro(e))}</p>`; return; }
-  if (!u || u.isAnonymous) {
+  if (!u) {
     c.innerHTML = `<p>Entre com a conta Google de administrador para moderar os comentários.</p>
       ${N.interno() ? `<p class="espaco__alerta">Abra este endereço no Chrome ou no Safari: o Google não deixa entrar por dentro do ${esc(N.interno())}.</p>` : '<div class="espaco__acoes"><button type="button" class="btn btn--primary" data-adm="entrar">Entrar com o Google</button></div>'}
       <p class="espaco__msg" id="admMsg" role="status" hidden></p>`;
     return;
   }
   if (!(await ehAdmin(S, u))) {
-    c.innerHTML = `<p class="espaco__alerta">A conta <b>${esc(u.email || u.displayName || 'atual')}</b> não é de administradora.</p>
-      <p>Para dar acesso, acrescente este código em <code>config/admin</code> (campo <code>uids</code>) no Firestore:</p>
+    const anonimo = !!u.isAnonymous;
+    c.innerHTML = `<p class="espaco__alerta">${anonimo ? 'Este navegador não tem acesso de administrador.' : `A conta <b>${esc(u.email || u.displayName || 'atual')}</b> não é de administradora.`}</p>
+      ${anonimo && !N.interno() ? '<p>Se você é a pessoa que modera o site, entre com a sua conta Google:</p><div class="espaco__acoes"><button type="button" class="btn btn--primary" data-adm="entrar">Entrar com o Google</button></div>' : ''}
+      <p>Para dar acesso a esta identidade, acrescente este código em <code>config/admin</code> (campo <code>uids</code>) no Firestore:</p>
       <p><code class="admin__uid">${esc(u.uid)}</code></p>
-      <div class="espaco__acoes"><button type="button" class="btn btn--ghost" data-adm="copiar" data-uid="${esc(u.uid)}">Copiar o código</button><button type="button" class="btn btn--ghost" data-adm="sair">Sair desta conta</button></div>
+      <div class="espaco__acoes"><button type="button" class="btn btn--ghost" data-adm="copiar" data-uid="${esc(u.uid)}">Copiar o código</button>${anonimo ? '' : '<button type="button" class="btn btn--ghost" data-adm="sair">Sair desta conta</button>'}</div>
       <p class="espaco__msg" id="admMsg" role="status" hidden></p>`;
     return;
   }
@@ -111,6 +113,8 @@ async function listarPublicados() {
   carregar();
 }
 
+const aposRemover = (li, vazio) => { const ul = li.parentElement; li.remove(); if (ul && !ul.children.length) ul.outerHTML = `<p class="cv__estado">${vazio}</p>`; };
+
 const dizer = (t, tipo = '') => { const m = $('#admMsg', dlg); if (m) { m.textContent = t; m.hidden = !t; m.dataset.tipo = tipo; } };
 
 async function agir(b) {
@@ -129,17 +133,17 @@ async function agir(b) {
     b.disabled = true;
     if (a === 'aprovar') {
       const pend = await getDoc(doc(S.db, 'comentarios_pendentes', id));
-      if (!pend.exists()) { li.remove(); return; }
+      if (!pend.exists()) { aposRemover(li, 'Nenhum comentário aguardando aprovação.'); return; }
       const x = pend.data();
       const lote = writeBatch(S.db);
       lote.set(doc(S.db, 'paradas', parada, 'comentarios', id), { uid: x.uid, ...(x.nome ? { nome: x.nome } : {}), texto: x.texto, criadoEm: x.criadoEm, aprovadoEm: serverTimestamp() });
       lote.delete(doc(S.db, 'comentarios_pendentes', id));
       await lote.commit();
-      C.limparCache(); li.remove(); dizer('Aprovado: já aparece para todos.', 'ok');
+      C.limparCache(); aposRemover(li, 'Nenhum comentário aguardando aprovação.'); dizer('Aprovado: já aparece para todos.', 'ok');
     } else if (a === 'rejeitar') {
-      await S.fsM.deleteDoc(doc(S.db, 'comentarios_pendentes', id)); li.remove(); dizer('Comentário apagado.', 'ok');
+      await S.fsM.deleteDoc(doc(S.db, 'comentarios_pendentes', id)); aposRemover(li, 'Nenhum comentário aguardando aprovação.'); dizer('Comentário apagado.', 'ok');
     } else if (a === 'despublicar') {
-      await S.fsM.deleteDoc(doc(S.db, 'paradas', parada, 'comentarios', id)); C.limparCache(); li.remove(); dizer('Comentário despublicado e apagado.', 'ok');
+      await S.fsM.deleteDoc(doc(S.db, 'paradas', parada, 'comentarios', id)); C.limparCache(); aposRemover(li, 'Nenhum comentário publicado nesta parada.'); dizer('Comentário despublicado e apagado.', 'ok');
     }
   } catch (e) { b.disabled = false; dizer(E.mensagemDeErro(e) || 'Não foi possível concluir.', 'erro'); }
 }
