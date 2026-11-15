@@ -16,7 +16,7 @@ Dica: o navegador guarda arquivos em cache; recarregue com Cmd+Shift+R depois de
 
 | Arquivo | O que faz |
 |---|---|
-| `index.html` | Estrutura da página inicial, textos fixos (herói, três ideias, sobre o livro, aviso) e metadados de compartilhamento |
+| `index.html` | Estrutura da página inicial, textos fixos (herói, três ideias, sobre o livro, aviso, **seção "Quem fez este site"** `#autor` com o link do Instagram) e metadados de compartilhamento |
 | `js/data/stories.js` | **Todo o conteúdo das 12 paradas** (títulos, cores, cartões, citações) e o baralho de frases |
 | `js/data/imagens.js` | Troca das ilustrações por imagens (veja `docs/imagens-gemini.md`) |
 | `js/ui/sprite.js` | Biblioteca das ilustrações SVG (frutas, pão, relógio etc.) |

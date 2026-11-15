@@ -290,3 +290,21 @@
   .hot { animation: hot-drop .8s var(--ease-spring) both; animation-delay: calc(.45s + var(--hi, 0) * .09s); }
   @keyframes hot-drop { from { opacity: 0; margin-top: -38px; } to { opacity: 1; margin-top: 0; } }
 }
+
+/* ===== Quem fez este site (seção #autor) ===== */
+.autor { padding: clamp(56px, 9vw, 104px) 0; background: var(--paper); position: relative; }
+.autor__grid { display: grid; gap: 22px; align-items: start; }
+.autor__marca { width: clamp(76px, 20vw, 120px); height: auto; aspect-ratio: 1; filter: drop-shadow(0 8px 18px rgba(20, 40, 30, 0.22)); }
+.autor__txt { max-width: 64ch; }
+.autor__txt p { color: var(--ink-2); }
+.autor__txt .autor__abre { margin: 14px 0 0; font: 500 var(--fs-lead)/1.4 var(--font-serif); color: var(--ink); text-wrap: balance; }
+.autor__txt h3 { margin: 30px 0 8px; font: 600 clamp(1.15rem, 3vw, 1.35rem)/1.25 var(--font-serif); color: var(--forest-2); }
+.autor__txt .autor__nota { margin: 26px 0 0; padding: 12px 16px; border-radius: var(--r-m); background: color-mix(in srgb, var(--sun) 18%, var(--paper)); border: 1px solid color-mix(in srgb, var(--sun) 45%, transparent); font-size: .9rem; line-height: 1.5; color: var(--ink); }
+.autor__txt .autor__fecho { margin: 22px 0 0; font: 500 1.12rem/1.5 var(--font-serif); color: var(--ink); }
+.autor__acoes { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0 0; }
+@media (min-width: 900px) {
+  .autor__grid { grid-template-columns: 168px minmax(0, 1fr); gap: 52px; }
+  .autor__marca { width: 132px; position: sticky; top: calc(var(--header-h) + 28px); }
+}
+/* rodapé: links podem quebrar de linha em telas estreitas */
+.ftr__links { flex-wrap: wrap; gap: 8px 20px; }
