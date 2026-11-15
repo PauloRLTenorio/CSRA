@@ -64,6 +64,14 @@ body { padding-top: var(--devbar-h); }
   .cv__aviso { font-size: .68rem; line-height: 1.3; }
   .cv--digitando .cv__lista { display: block; }
 }
+/* celular deitado bem baixo (ex.: 667x375): mais um aperto no formulário */
+@media (orientation: landscape) and (max-height: 420px) {
+  .cv__rodape { gap: 4px; }
+  .cv__t { min-height: 38px; padding: 6px 12px; }
+  .cv__nome { min-height: 34px; }
+  .cv__enviar { min-height: 36px; }
+  .cv__aviso { line-height: 1.22; }
+}
 
 /* ----- convite para guardar na nuvem (dentro das interações) ----- */
 .nv-convite { display: grid; gap: 8px; padding: 10px 12px; border-radius: 16px; background: color-mix(in srgb, var(--st-accent) 20%, transparent); border: 1px solid color-mix(in srgb, var(--st-accent) 45%, transparent); }
