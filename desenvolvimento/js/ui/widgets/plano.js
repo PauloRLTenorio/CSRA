@@ -30,7 +30,7 @@ export function mount(host, card, ctx) {
   };
   host.addEventListener('click', async (e) => {
     const d = e.target.closest('.pn__day');
-    if (d) { state.togglePlan(+d.dataset.i); paint(); host.dispatchEvent(new CustomEvent('csra:caderno', { bubbles: true, detail: { host } })); return; }
+    if (d) { state.togglePlan(+d.dataset.i); paint(); return; }
     if (e.target.closest('#pnReset')) { state.resetPlan(); paint(); return; }
     if (e.target.closest('#pnShare')) {
       const n = state.plan().checks.length;

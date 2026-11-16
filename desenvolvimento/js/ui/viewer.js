@@ -136,11 +136,10 @@ export class Viewer {
 
   _key(e) {
     if (!this.isOpen) return;
-    if (document.querySelector('dialog[open]')) return; // um diálogo (Seu espaço, moderação) está aberto: o teclado é dele
     if (e.key === 'Escape') { e.preventDefault(); this.close(); return; }
     const t = e.target;
     const typing = t && t.closest && t.closest('input[type="range"], input[type="text"], textarea, select');
-    if (typing && ['ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown'].includes(e.key)) return;
+    if (typing && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) return;
     if (e.key === 'ArrowRight' || (e.key === 'PageDown')) { e.preventDefault(); this.next(); }
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); this.prev(); }
     else if (e.key === 'Tab') this._trap(e);
@@ -220,7 +219,8 @@ export class Viewer {
     const note = c.note ? `<p class="sv__note">${ICON_I}<span>${esc(c.note)}</span></p>` : '';
     const links = c.links || (c.link ? [c.link] : []);
     const link = links.length ? `<div class="sv__links">${links.map((l, i) => `<a class="sv__btn ${i ? 'sv__btn--ghost' : 'sv__btn--pri'}" href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.txt)}</a>`).join('')}</div>` : '';
-    const ref = c.ref && !c.q ? `<span class="sv__ref">No livro: ${esc(c.ref)}</span>` : '';
+    // hl: frase do livro (não aparece na tela) que o link de "No livro" destaca na página do site oficial, quando a referência é um parágrafo longo
+    const ref = c.ref && !c.q ? `<span class="sv__ref"${c.hl ? ` data-q="${esc(c.hl)}"` : ''}>No livro: ${esc(c.ref)}</span>` : '';
     const slot = this.idx === 0 ? (img(`c-${this.story.n}-1`) || img(`parada-${this.story.n}`)) : img(`c-${this.story.n}-${this.idx + 1}`);
     return `<div class="sv__stage">${stageHTML(c.art, this.story.scene, slot)}</div>
       <div class="sv__text">

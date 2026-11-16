@@ -110,7 +110,7 @@ $('#cadernoCopiar').addEventListener('click', async () => {
   try { await navigator.clipboard.writeText(txt); toast('Caderno copiado!'); } catch (e) { toast('Não foi possível copiar.'); }
 });
 $('#cadernoLimpar').addEventListener('click', () => {
-  if (!confirm(state.nuvemLigada() ? 'Apagar todas as anotações do seu caderno? Elas serão apagadas deste aparelho e da nuvem.' : 'Apagar todas as anotações do seu caderno neste aparelho?')) return;
+  if (!confirm('Apagar todas as anotações do seu caderno neste aparelho?')) return;
   Object.keys(state.notes()).forEach((id) => state.setNote(id, ''));
   refresh(); toast('Caderno apagado.');
 });
@@ -130,8 +130,6 @@ $('#btnCompartilhar').addEventListener('click', async () => {
 });
 
 try { mountLeve({ toast }); } catch (e) { /* bloco opcional: nunca pode derrubar o resto */ }
-// Nuvem (comentários, caderno e conta): módulo opcional. Se falhar, o site funciona igual, só sem ela.
-import('./nuvem/iniciar.js').then((m) => m.iniciarNuvem({ toast, refresh })).catch(() => { /* sem nuvem */ });
 // "Cap. 4, § 111" vira link para o trecho exato no site do livro. Módulo opcional: se falhar, o site funciona igual, só sem os links.
 import('./ui/refs.js').then((m) => m.observarRefs(document.body)).catch(() => { /* sem links */ });
 observeReveal();

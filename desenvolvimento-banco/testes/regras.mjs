@@ -1,6 +1,6 @@
 // Teste das regras do Firestore contra o projeto REAL (csra-e60b2), por REST, com usuários anônimos de teste.
 // Cria 2 usuários anônimos, tenta o que pode e o que não pode, e apaga o que criou.
-// Uso: node desenvolvimento/testes/regras.mjs --confirmo   (a chave abaixo é a chave web pública do Firebase)
+// Uso: node desenvolvimento-banco/testes/regras.mjs --confirmo   (a chave abaixo é a chave web pública do Firebase)
 if (!process.argv.includes('--confirmo')) { console.log('Este teste escreve no banco do projeto real (e apaga em seguida). Rode com --confirmo para continuar.'); process.exit(2); }
 const KEY = 'AIzaSyC3SN3FtB0XEJ5rAJuMoct0cjw99YY4NN0';
 const P = 'csra-e60b2';

@@ -33,16 +33,16 @@
 <link rel="stylesheet" href="css/home.css">
 <link rel="stylesheet" href="css/story.css">
 <link rel="stylesheet" href="css/widgets.css">
-<link rel="stylesheet" href="css/nuvem.css">
+<link rel="stylesheet" href="css/dev.css">
 <script>
   // aplica o tema salvo antes da pintura, para não piscar
   try { var t = localStorage.getItem('csra.tema'); if (t === 'day' || t === 'night') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
 </script>
 </head>
 <body>
-<a class="skip" href="#jornada">Pular para a jornada</a>
+<div class="devbar" role="note" title="Versão de testes, sem banco de dados. Pode mudar ou sair do ar a qualquer momento."><b>Dev sem banco</b><a href="../desenvolvimento-banco/">com banco</a><a href="../">oficial</a></div>
 
-<div class="devbar" role="note" title="Testes de comentários e caderno na nuvem. Pode mudar ou sair do ar a qualquer momento."><b>Versão em desenvolvimento</b><a href="../">Ver a versão oficial</a></div>
+<a class="skip" href="#jornada">Pular para a jornada</a>
 
 <header class="hdr" id="hdr">
   <a class="brand" href="#/" aria-label="CSRA — início">
@@ -140,7 +140,7 @@
     <div class="container">
       <p class="eyebrow">Só seu</p>
       <h2 id="caderno-titulo" class="h2">Meu caderno</h2>
-      <p class="sec-lead">As reflexões que você escreveu ficam guardadas neste aparelho e, se você quiser, também na nuvem. Só você vê.</p>
+      <p class="sec-lead">As reflexões que você escreveu ficam guardadas apenas neste aparelho. Ninguém mais vê.</p>
       <div class="caderno__list" id="cadernoLista"></div>
       <div class="caderno__act"><button type="button" class="btn btn--ghost" id="cadernoCopiar">Copiar tudo</button><button type="button" class="btn btn--ghost" id="cadernoLimpar">Apagar o caderno</button></div>
     </div>

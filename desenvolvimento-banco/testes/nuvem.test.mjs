@@ -1,4 +1,4 @@
-// Testes das funções puras da "nuvem". Rodar (na raiz do repositório): node --test desenvolvimento/testes/nuvem.test.mjs
+// Testes das funções puras da "nuvem". Rodar (na raiz do repositório): node --test desenvolvimento-banco/testes/nuvem.test.mjs
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mesclar, normalizar, canon, igual, vazio, paraNuvem } from '../js/nuvem/merge.js';

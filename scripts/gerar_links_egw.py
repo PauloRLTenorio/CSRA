@@ -8,7 +8,8 @@ Entradas (ficam em _trabalho/, FORA do git, porque são texto do livro):
   _trabalho/egw/paginas.json   páginas do site (início de cada página)
 Saída: js/data/egw.js — só números (IDs) e as frases curtas que o site já cita. Nenhum trecho do livro além delas.
 
-Uso (na raiz do projeto):  python3 scripts/gerar_links_egw.py
+Uso (na raiz do projeto):  python3 scripts/gerar_links_egw.py [pasta]
+  sem argumento: o site oficial (a raiz);  com 'desenvolvimento': gera/confere js/data/egw.js dessa pasta.
 Sai com erro se alguma referência não bater com o livro (capítulo errado, passagem inexistente, frase fora da passagem).
 """
 import difflib
@@ -20,8 +21,10 @@ import sys
 import unicodedata
 import urllib.parse
 
-RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TRAB = os.path.join(RAIZ, '_trabalho')
+RAIZ_REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_args = [a for a in sys.argv[1:] if not a.startswith('--')]
+RAIZ = os.path.join(RAIZ_REPO, _args[0]) if _args else RAIZ_REPO  # a pasta do site que está sendo gerada/conferida
+TRAB = os.path.join(RAIZ_REPO, '_trabalho')
 EGW = os.path.join(TRAB, 'egw')
 SAIDA = os.path.join(RAIZ, 'js', 'data', 'egw.js')
 
@@ -156,7 +159,7 @@ def referencias_do_site():
 
 def citacoes_do_site():
     js = ("import {STORIES,RESUMO,FRASES} from './js/data/stories.js';const o=[];"
-          "for(const s of [...STORIES,RESUMO])for(const c of s.cards)if(c.q)o.push({q:c.q,ref:c.ref});"
+          "for(const s of [...STORIES,RESUMO])for(const c of s.cards){if(c.q)o.push({q:c.q,ref:c.ref});if(c.hl)o.push({q:c.hl,ref:c.ref});}"
           "for(const f of FRASES)o.push({q:f.q,ref:f.ref});console.log(JSON.stringify(o));")
     r = subprocess.run(['node', '--input-type=module', '-e', js], cwd=RAIZ, capture_output=True, text=True, check=True)
     return json.loads(r.stdout)

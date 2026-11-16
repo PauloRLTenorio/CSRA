@@ -1,6 +1,6 @@
 // Configuração da "nuvem" (comentários, caderno e conta). Só existe na versão em desenvolvimento.
 // A configuração web do Firebase é PÚBLICA por desenho: quem protege os dados são as regras de segurança do Firestore
-// (desenvolvimento/firestore.rules), não o sigilo destes valores.
+// (desenvolvimento-banco/firestore.rules), não o sigilo destes valores.
 export const NUVEM = {
   ativa: true,              // chave geral: false desliga tudo e o site volta a funcionar como a versão oficial
   comentarios: true,        // cartão "Conversa" no fim de cada parada

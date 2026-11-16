@@ -1,0 +1,10 @@
+/* ===== Só na versão de desenvolvimento: faixa laranja que lembra que esta NÃO é a versão oficial. Não vai para a produção. ===== */
+/* ----- faixa laranja: lembra que esta NÃO é a versão oficial ----- */
+:root { --devbar-h: 30px; }
+html { scroll-padding-top: calc(var(--header-h) + var(--devbar-h) + 8px); }
+body { padding-top: var(--devbar-h); }
+.devbar { position: fixed; inset: 0 0 auto 0; z-index: 70; height: var(--devbar-h); display: flex; align-items: center; justify-content: center; gap: 14px; padding: 0 var(--gutter); background: #f28c28; color: #1d1405; font: 600 .76rem/1 var(--font-sans); white-space: nowrap; overflow: hidden; }
+.devbar b { font-weight: 800; letter-spacing: .04em; text-transform: uppercase; font-size: .7rem; }
+.devbar a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.hdr { top: var(--devbar-h); }
+.hero { min-height: calc(100svh - var(--devbar-h)); }
