@@ -20,7 +20,7 @@ export const STORIES = [
     pagina: 74,
     cards: [
       say('Antes de qualquer receita, existiu um cardápio.', 'O primeiro foi escolhido pelo próprio Criador, para um casal, num jardim.', { items: ['tree'], layout: 'one', anim: 'sway' }, 'Cap. 4, § 111'),
-      say('Frutas. Grãos. Nozes. Verduras.', 'O livro chama esse quarteto de o regime escolhido pelo Criador: alimentos preparados do jeito mais simples e natural possível.', { items: ['apple', 'wheat', 'nut', 'leaf'], layout: 'four', anim: 'float' }, 'Cap. 4, § 111'),
+      say('Frutas. Grãos. Nozes. Verduras.', 'O livro chama esse quarteto de o regime escolhido pelo Criador: alimentos preparados do jeito mais simples e natural possível.', { items: ['apple', 'wheat', 'nut', 'leaf'], layout: 'four', anim: 'float' }, 'Cap. 4, § 111', { hl: 'Cereais, frutas, nozes e verduras constituem o regime dietético escolhido por nosso Criador' }),
       widget('prato', 'Monte o primeiro prato', 'Toque nos quatro grupos e veja o que o livro diz de cada um.'),
       say('Simples não é sem graça.', 'É o alimento chegando à mesa perto de como a natureza o fez, sem muito disfarce. O livro sugere cozinhar menos e comer mais frutas frescas.', { items: ['pear', 'grapes', 'orange'], layout: 'three', anim: 'bounce' }, 'Cap. 18, § 466'),
       say('Cada terra tem a sua mesa.', 'O livro pede alimentos de acordo com o clima, a estação e o que a sua região produz. Entre os exemplos citados estão arroz, milho, feijão e lentilha.', { items: ['corn', 'bowl', 'tomato'], layout: 'three', anim: 'float' }, 'Cap. 4, §§ 144–146'),
@@ -265,7 +265,7 @@ export const RESUMO = {
   book: 'O livro inteiro (25 capítulos e dois apêndices). Cada uma das doze paradas indica os capítulos certos',
   ponte: 'Gostou? A jornada completa aprofunda cada uma dessas ideias.',
   cards: [
-    say('Tudo começou com um cardápio.', 'Frutas, grãos, nozes e verduras: o primeiro cardápio, escolhido pelo próprio Criador.', { items: ['apple', 'wheat', 'nut', 'leaf'], layout: 'four', anim: 'float' }, 'Cap. 4, § 111'),
+    say('Tudo começou com um cardápio.', 'Frutas, grãos, nozes e verduras: o primeiro cardápio, escolhido pelo próprio Criador.', { items: ['apple', 'wheat', 'nut', 'leaf'], layout: 'four', anim: 'float' }, 'Cap. 4, § 111', { hl: 'Cereais, frutas, nozes e verduras constituem o regime dietético escolhido por nosso Criador' }),
     say('A vida é um empréstimo.', 'Cuidar do corpo é uma forma de gratidão — não de obsessão.', { items: ['heart'], layout: 'one', anim: 'pulse' }, 'Cap. 1, § 1'),
     say('A mesa conversa com a mente.', 'O que pesa o estômago embaça o pensamento. Uma refeição simples ajuda a pensar, decidir e ouvir.', { items: ['bulb', 'plate'], layout: 'two', anim: 'float' }, 'Cap. 5, §§ 153 e 175'),
     say('Simples, no horário, sem exagero.', 'Poucos pratos, intervalos entre as refeições e nada de beliscar — sem transformar isso em teste para ninguém.', { items: ['clock', 'bowl', 'moon'], layout: 'three', anim: 'bounce' }, 'Cap. 9, §§ 267–282'),
@@ -301,7 +301,7 @@ export const FRASES = [
 // Citações usadas nos cartões, reunidas para a conferência automática.
 export function todasCitacoes() {
   const out = [];
-  for (const s of [...STORIES, RESUMO]) for (const c of s.cards) if (c.q) out.push(c.q);
+  for (const s of [...STORIES, RESUMO]) for (const c of s.cards) { if (c.q) out.push(c.q); if (c.hl) out.push(c.hl); }
   for (const f of FRASES) out.push(f.q);
   return out;
 }

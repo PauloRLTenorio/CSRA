@@ -214,6 +214,7 @@ export const CITACOES = {
   "A vida é-nos concedida apenas como um empréstimo": { n: 1, u: [64, 66, "A%20vida%20%C3%A9%2Dnos%20concedida%20apenas%20como%20um%20empr%C3%A9stimo"] },
   "Aprendam a cozinhar.": { n: 374, u: [1554, 1555, "Aprendam%20a%20cozinhar"] },
   "Ar puro, luz solar, abstinência, repouso, exercício": { n: 452, u: [1865, 1869, "Ar%20puro%2C%20luz%20solar%2C%20abstin%C3%AAncia%2C%20repouso%2C%20exerc%C3%ADcio"] },
+  "Cereais, frutas, nozes e verduras constituem o regime dietético escolhido por nosso Criador": { n: 111, u: [484, 488, "Cereais%2C%20frutas%2C%20nozes%20e,escolhido%20por%20nosso%20Criador"] },
   "Cinco horas, pelo menos, devem mediar entre cada refeição": { n: 267, u: [1104, 1107, "Cinco%20horas%2C%20pelo%20menos,mediar%20entre%20cada%20refei%C3%A7%C3%A3o"] },
   "Comei em períodos regulares.": { n: 264, u: [1085, 1089, "Comei%20em%20per%C3%ADodos%20regulares"] },
   "Como eu, que me declaro cristão, trato a habitação que Deus me deu?": { n: 10, u: [76, 93, "Como%20eu%2C%20que%20me,que%20Deus%20me%20deu"] },
