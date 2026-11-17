@@ -1,9 +1,10 @@
 // "A roda dos oito remédios": a "farmácia" simples da natureza, segundo o livro.
-import { sym, $, $$ } from './util.js';
+import { sym, $, $$, esc } from './util.js';
 
-const R = [
+// hl: frase do livro (não aparece na tela) que o link da referência destaca, quando a passagem tem vários parágrafos
+export const R = [
   { n: 'Ar puro', s: 'wind', t: 'Ar fresco e pulmões livres renovam o corpo e ajudam a circulação.', ref: 'Cap. 5, §§ 159–160' },
-  { n: 'Luz solar', s: 'sun', t: 'A luz do sol está na lista dos remédios simples. Aproveite-a com bom senso.', ref: 'Cap. 17, §§ 452 e 454' },
+  { n: 'Luz solar', s: 'sun', t: 'A luz do sol está na lista dos remédios simples. Aproveite-a com bom senso.', ref: 'Cap. 17, §§ 452 e 454', hl: 'Preciso tomar tanta luz solar quanto me seja possível' },
   { n: 'Abstinência', s: 'shield', t: 'Dizer não ao que prejudica: estimulantes, excessos, pressa. Proteger o corpo também é cuidar.', ref: 'Cap. 17, § 452' },
   { n: 'Repouso', s: 'moon', t: 'O corpo se reconstrói enquanto descansa. Ritmo e sono valem mais que pressa.', ref: 'Cap. 17, § 452' },
   { n: 'Exercício', s: 'feet', t: 'Movimento ajuda a digestão e a saúde em geral. Esforço violento logo depois de comer, não.', ref: 'Cap. 5, § 158; Cap. 17, § 455' },
@@ -28,6 +29,6 @@ export function mount(host) {
     const r = R[+b.dataset.i];
     $$('.rm__btn', host).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     ctr.innerHTML = r.n.replace(' ', '<br>');
-    card.innerHTML = `<h3>${r.n}</h3><p>${r.t}</p><small>${r.ref}</small>`;
+    card.innerHTML = `<h3>${r.n}</h3><p>${r.t}</p><small${r.hl ? ` data-q="${esc(r.hl)}"` : ''}>${r.ref}</small>`;
   });
 }

@@ -160,7 +160,14 @@ def referencias_do_site():
 def citacoes_do_site():
     js = ("import {STORIES,RESUMO,FRASES} from './js/data/stories.js';const o=[];"
           "for(const s of [...STORIES,RESUMO])for(const c of s.cards){if(c.q)o.push({q:c.q,ref:c.ref});if(c.hl)o.push({q:c.hl,ref:c.ref});}"
-          "for(const f of FRASES)o.push({q:f.q,ref:f.ref});console.log(JSON.stringify(o));")
+          "for(const f of FRASES)o.push({q:f.q,ref:f.ref});"
+          # frases de destaque (hl) das interações: o link da referência de cada uma abre o parágrafo certo
+          "const w=(m)=>import('./js/ui/widgets/'+m+'.js');"
+          "const[ce,re,rf]=await Promise.all([w('cenario'),w('remedios'),w('refeicao')]);"
+          "for(const s of ce.SC||[])for(const x of s.o)if(x.hl)o.push({q:x.hl,ref:x.r});"
+          "for(const x of re.R||[])if(x.hl)o.push({q:x.hl,ref:x.ref});"
+          "for(const x of rf.STATES||[])if(x.hl)o.push({q:x.hl,ref:x.ref});"
+          "console.log(JSON.stringify(o));")
     r = subprocess.run(['node', '--input-type=module', '-e', js], cwd=RAIZ, capture_output=True, text=True, check=True)
     return json.loads(r.stdout)
 

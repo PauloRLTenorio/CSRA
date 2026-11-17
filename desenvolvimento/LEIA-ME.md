@@ -10,6 +10,7 @@ Endereço: <https://paulorltenorio.github.io/CSRA/desenvolvimento/> (escondida d
 | O quê | Detalhe |
 | --- | --- |
 | Cartão 2 da parada 1 e cartão da página inicial (Resumo) | o link "Cap. 4, § 111" abre o parágrafo 488 do site oficial **com a frase "Cereais, frutas, nozes e verduras constituem o regime dietético escolhido por nosso Criador" destacada**. Antes, os dois cartões levavam ao começo do § 111 |
+| Links "No livro" de 11 cartões e 6 interações (17/11/2026) | passagens que ocupam vários parágrafos no site oficial: o link agora abre o parágrafo de que o texto fala, com a frase destacada (campo `hl` em `js/data/stories.js`; nas interações, `hl` em `cenario.js`, `remedios.js` e `refeicao.js`) |
 | `js/ui/viewer.js` | campo novo de cartão, `hl`: frase do livro (não aparece na tela) que o link "No livro" destaca |
 | `scripts/gerar_links_egw.py` | agora aceita a pasta: `python3 scripts/gerar_links_egw.py desenvolvimento` |
 
