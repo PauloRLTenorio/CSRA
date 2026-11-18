@@ -213,7 +213,7 @@ export const CITACOES = {
   "A saúde é um tesouro.": { n: 14, u: [100, 104, "A%20sa%C3%BAde%20%C3%A9%20um%20tesouro"] },
   "A vida é-nos concedida apenas como um empréstimo": { n: 1, u: [64, 66, "A%20vida%20%C3%A9%2Dnos%20concedida%20apenas%20como%20um%20empr%C3%A9stimo"] },
   "Aprendam a cozinhar.": { n: 374, u: [1554, 1555, "Aprendam%20a%20cozinhar"] },
-  "Ar puro, luz solar … eis os verdadeiros remédios": { n: 452, u: [1865, 1869, "Ar%20puro%2C%20luz%20solar,eis%20os%20verdadeiros%20rem%C3%A9dios"] },
+  "Ar puro, luz solar, abstinência, repouso, exercício, regime conveniente, uso de água e confiança no poder divino — eis os verdadeiros remédios": { n: 452, u: [1865, 1869, "Ar%20puro%2C%20luz%20solar,eis%20os%20verdadeiros%20rem%C3%A9dios"] },
   "Cereais, frutas, nozes e verduras constituem o regime dietético escolhido por nosso Criador": { n: 111, u: [484, 488, "Cereais%2C%20frutas%2C%20nozes%20e,escolhido%20por%20nosso%20Criador"] },
   "Cinco horas, pelo menos, devem mediar entre cada refeição": { n: 267, u: [1104, 1107, "Cinco%20horas%2C%20pelo%20menos,mediar%20entre%20cada%20refei%C3%A7%C3%A3o"] },
   "Comei em períodos regulares.": { n: 264, u: [1085, 1089, "Comei%20em%20per%C3%ADodos%20regulares"] },
@@ -243,6 +243,5 @@ export const CITACOES = {
   "nunca deveríamos advogar um regime que nos faça padecer fome": { n: 805, u: [3106, 3109, "nunca%20dever%C3%ADamos%20advogar%20um,nos%20fa%C3%A7a%20padecer%20fome"] },
   "reforma de saúde torna-se a deformação da saúde": { n: 324, u: [1286, 1287, "reforma%20de%20sa%C3%BAde%20torna%2Dse%20a%20deforma%C3%A7%C3%A3o%20da%20sa%C3%BAde"] },
   "reforma de saúde é tornada deforma-saúde": { n: 393, u: [1632, 1634, "reforma%20de%20sa%C3%BAde%20%C3%A9%20tornada%20deforma%2Dsa%C3%BAde"] },
-  "regime conveniente, uso de água e confiança no poder divino — eis os verdadeiros remédios": { n: 452, u: [1865, 1869, "regime%20conveniente%2C%20uso%20de,eis%20os%20verdadeiros%20rem%C3%A9dios"] },
   "um estômago pacífico": { n: 187, u: [722, 726, "um%20est%C3%B4mago%20pac%C3%ADfico"] },
 };
