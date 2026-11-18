@@ -1,5 +1,5 @@
 // GERADO por scripts/gerar_sw.mjs — não edite à mão.
-const CACHE = 'dev-csra-85a7f227f7';
+const CACHE = 'dev-csra-63c7f885e3';
 const ARQUIVOS = [
  "./",
  "assets/apple-touch-icon.png",

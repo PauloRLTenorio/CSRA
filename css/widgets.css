@@ -135,7 +135,7 @@
 
 /* ----- REMÉDIOS ----- */
 .rm__wheel { position: relative; flex: 0 0 auto; width: min(100%, 300px); aspect-ratio: 1; margin: 0 auto; container-type: inline-size; }
-.rm__ctr { position: absolute; left: 50%; top: 50%; width: 46%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; display: grid; place-items: center; text-align: center; background: color-mix(in srgb, var(--st-accent) 22%, transparent); font: 600 max(.7rem, 4.6cqw)/1.1 var(--font-serif); padding: 4px; }
+.rm__ctr { position: absolute; left: 50%; top: 50%; width: 46%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; display: grid; place-items: center; text-align: center; background: color-mix(in srgb, var(--st-accent) 22%, transparent); font: 600 max(.8rem, 6.4cqw)/1.1 var(--font-serif); padding: 4px; }
 .rm__btn { position: absolute; width: 22%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--st-ink) 8%, transparent); transition: transform .3s var(--ease-spring), background .25s; }
 .rm__btn svg { width: 68%; height: 68%; }
 .rm__btn[aria-pressed="true"] { background: var(--st-accent); transform: translate(-50%, -50%) scale(1.18); box-shadow: 0 6px 18px rgba(0, 0, 0, .25); }
