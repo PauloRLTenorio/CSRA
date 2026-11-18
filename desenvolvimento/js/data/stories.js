@@ -207,7 +207,7 @@ export const STORIES = [
     ponte: 'Cuidar de si prepara para cuidar dos outros. Como convidar sem pressionar?',
     pagina: 65,
     cards: [
-      say('Oito remédios que não vêm em caixa.', 'O livro lista os “remédios” simples da natureza: ar puro, luz solar, abstinência do que faz mal, repouso, exercício, alimentação adequada, água e confiança em Deus.', { items: ['wind', 'sun', 'drop', 'moon'], layout: 'four', anim: 'float' }, 'Cap. 17, § 452', { q: 'Ar puro, luz solar, abstinência, repouso, exercício' }),
+      say('Oito remédios que não vêm em caixa.', 'O livro lista os “remédios” simples da natureza: ar puro, luz solar, abstinência do que faz mal, repouso, exercício, alimentação adequada, água e confiança em Deus.', { items: ['wind', 'sun', 'drop', 'moon'], layout: 'four', anim: 'float' }, 'Cap. 17, § 452', { q: 'regime conveniente, uso de água e confiança no poder divino — eis os verdadeiros remédios', hl: 'Ar puro, luz solar … eis os verdadeiros remédios' }),
       widget('remedios', 'A roda dos oito remédios', 'Toque em cada um para ver o que o livro diz.'),
       say('A natureza trabalha devagar.', 'O livro reconhece que o processo de curar e construir é gradual e parece lento ao impaciente. Mas, quando não é atrapalhada, faz o seu trabalho bem.', { items: ['seedling'], layout: 'one', anim: 'sway' }, 'Cap. 17, § 452', { q: 'O processo da natureza para curar e construir, é gradual' }),
       say('Água: a melhor bebida.', 'O livro chama a água pura de uma das maiores bênçãos, na saúde e na doença. Bebida com generosidade, ajuda o corpo a fazer o seu trabalho.', { items: ['jug', 'glass'], layout: 'two', anim: 'bounce' }, 'Cap. 24, § 726'),

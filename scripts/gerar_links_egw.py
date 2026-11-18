@@ -185,6 +185,12 @@ def diretiva(sub):
     return enc(limpa(' '.join(ws[:4]))) + ',' + enc(limpa(' '.join(ws[-4:])))
 
 
+def diretiva2(ini, fim):
+    """Destaque de um trecho longo: do começo (ini) ao fim (fim), sem guardar o meio."""
+    limpa = lambda x: x.strip(' .,;:!?“”"\'()[]—')  # noqa: E731
+    return enc(limpa(ini)) + ',' + enc(limpa(fim))
+
+
 def main():
     erros, avisos = [], []
     paras, pag_de, cap_de, caps = carregar_site()
@@ -284,18 +290,31 @@ def main():
         achou = None
         for n in nums:
             if n in mapa:
-                achou = next(((n, p) for p in paragrafos_da(mapa, n, limite) if chave(q) in chave(p['text'])), None)
+                achou = next(((n, p) for p in paragrafos_da(mapa, n, limite) if all(chave(x) in chave(p['text']) for x in q.split(' … '))), None)
                 if achou:
                     break
         if not achou:
             erros.append(f'a frase não está na passagem indicada ({ref}): “{q}”')
             continue
         n, p = achou
-        palavras = re.findall(r'\w+', q)
-        mm = re.search(r'\W+'.join(re.escape(w) for w in palavras), p['text'], flags=re.IGNORECASE)
-        if not mm:
-            avisos.append(f'sem destaque (texto não localizado literalmente): “{q}”')
-        destino = {'n': n, 'ap': ap_ref, 'u': [pag_de[p['id']], p['id'], diretiva(mm.group(0)) if mm else '']}
+        def acha(x):
+            return re.search(r'\W+'.join(re.escape(w) for w in re.findall(r'\w+', x)), p['text'], flags=re.IGNORECASE)
+        partes = q.split(' … ')
+        if len(partes) == 2:  # "início … fim": destaca do começo ao fim, mas só as pontas ficam guardadas aqui
+            m1, m2 = acha(partes[0]), acha(partes[1])
+            if not (m1 and m2 and m1.start() < m2.start()):
+                erros.append(f'as pontas da frase não estão em ordem na passagem ({ref}): “{q}”')
+                continue
+            frag = diretiva2(m1.group(0), m2.group(0))
+        elif len(partes) == 1:
+            mm = acha(q)
+            if not mm:
+                avisos.append(f'sem destaque (texto não localizado literalmente): “{q}”')
+            frag = diretiva(mm.group(0)) if mm else ''
+        else:
+            erros.append(f'frase com mais de um " … ": “{q}”')
+            continue
+        destino = {'n': n, 'ap': ap_ref, 'u': [pag_de[p['id']], p['id'], frag]}
         if q in cit and cit[q]['u'][:2] != destino['u'][:2]:
             erros.append(f'a mesma frase aparece com referências que levam a parágrafos diferentes: “{q}” ({ref})')
         cit.setdefault(q, destino)

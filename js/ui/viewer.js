@@ -215,7 +215,7 @@ export class Viewer {
       return `<div class="sv__text"><h2 class="sv__big">${esc(c.big)}</h2><p class="sv__small">${esc(c.small)}</p></div><div class="sv__wdg" data-nonav></div>`;
     }
     // data-q: junto da referência, o link do livro (js/ui/refs.js) também destaca esta frase na página do site oficial
-    const q = c.q ? `<blockquote class="sv__q" data-q="${esc(c.q)}">“${esc(c.q)}”<cite>${esc(c.ref || '')}</cite></blockquote>` : '';
+    const q = c.q ? `<blockquote class="sv__q" data-q="${esc(c.hl || c.q)}">“${esc(c.q)}”<cite>${esc(c.ref || '')}</cite></blockquote>` : '';
     const note = c.note ? `<p class="sv__note">${ICON_I}<span>${esc(c.note)}</span></p>` : '';
     const links = c.links || (c.link ? [c.link] : []);
     const link = links.length ? `<div class="sv__links">${links.map((l, i) => `<a class="sv__btn ${i ? 'sv__btn--ghost' : 'sv__btn--pri'}" href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.txt)}</a>`).join('')}</div>` : '';
